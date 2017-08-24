@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15G1004" minimumToolsVersion="Xcode 7.0">
+    <entity name="SettingsData" representedClassName="SettingsData" syncable="YES">
+        <attribute name="difficult" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="firstMoveHuman" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="numOfColumns" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="numOfLines" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="SettingsData" positionX="-785" positionY="-420" width="128" height="105"/>
+    </elements>
+</model>
