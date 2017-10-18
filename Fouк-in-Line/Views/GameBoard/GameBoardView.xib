@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GameBoardView" customModule="Four_in_Line" customModuleProvider="target">
+            <connections>
+                <outlet property="boardView" destination="utU-rT-p8u" id="bcb-W2-IVV"/>
+                <outlet property="boardViewAspectRatioConstraint" destination="6Xa-cq-uP1" id="IAr-Ah-ipg"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="559" height="468"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="utU-rT-p8u">
+                    <rect key="frame" x="0.0" y="94.5" width="559" height="279.5"/>
+                    <color key="backgroundColor" red="0.92134684320000004" green="0.86646538969999998" blue="0.93512964249999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="utU-rT-p8u" secondAttribute="height" multiplier="2:1" id="6Xa-cq-uP1"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <gestureRecognizers/>
+            <constraints>
+                <constraint firstItem="utU-rT-p8u" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="KGj-VB-LQ4"/>
+                <constraint firstItem="utU-rT-p8u" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" priority="750" id="MHF-25-KhB"/>
+                <constraint firstItem="utU-rT-p8u" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="MLg-l6-MxM"/>
+                <constraint firstItem="utU-rT-p8u" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" priority="750" id="WoX-fI-bdI"/>
+                <constraint firstItem="utU-rT-p8u" firstAttribute="width" relation="lessThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="width" id="XMG-ML-MnI"/>
+                <constraint firstAttribute="bottom" secondItem="utU-rT-p8u" secondAttribute="bottom" priority="750" id="Yxu-Me-Otu"/>
+                <constraint firstAttribute="trailing" secondItem="utU-rT-p8u" secondAttribute="trailing" priority="750" id="okm-yn-y3B"/>
+                <constraint firstItem="utU-rT-p8u" firstAttribute="height" relation="lessThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="height" id="xFe-LI-5Z9"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outletCollection property="gestureRecognizers" destination="FdF-nT-x8B" appends="YES" id="HTh-O6-tK4"/>
+            </connections>
+            <point key="canvasLocation" x="125.5" y="-45"/>
+        </view>
+        <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.001" id="FdF-nT-x8B">
+            <connections>
+                <action selector="longPress:" destination="-1" id="NX0-0Z-emb"/>
+            </connections>
+        </pongPressGestureRecognizer>
+    </objects>
+</document>
