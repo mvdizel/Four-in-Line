@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreGraphics
+import DynamicBinder
 
 /// Class which implements binders to directly fire handlers.
 final class DirectNotification {

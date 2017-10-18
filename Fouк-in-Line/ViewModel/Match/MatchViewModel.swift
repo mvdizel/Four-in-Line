@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import DynamicBinder
 
 /// Protocol which defines match view model.
 protocol MatchViewModelProtocol: class {
@@ -36,7 +37,7 @@ final class MatchViewModel: MatchViewModelProtocol {
   // MARK: - Private Instance Attributes
   private let chipAddedBinder = DynamicBinder<Chip?>(nil)
   private let tempChipBinder = DynamicBinder<Chip?>(nil)
-  private let gameStartedBinder = DynamicBinder<Void>()
+  private let gameStartedBinder = DynamicBinder<Void>(())
   
   
   // MARK: - Public Instance Methods
