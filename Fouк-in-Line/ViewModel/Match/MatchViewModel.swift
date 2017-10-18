@@ -9,24 +9,7 @@
 import Foundation
 import DynamicBinder
 
-/// Protocol which defines match view model.
-protocol MatchViewModelProtocol: class {
-  
-  // MARK: - Instance Attributes
-  var chipAdded: DynamicBinderInterface<Chip?> { get }
-  var tempChip: DynamicBinderInterface<Chip?> { get }
-  var gameStarted: DynamicBinderInterface<Void> { get }
-  
-  
-  // MARK: - Instance Methods
-  func addChip(at column: Int)
-  func updateTempChip(column: Int?)
-  func newGame()
-}
-
-
-/// Class which implements `MatchViewModelProtocol`
-final class MatchViewModel: MatchViewModelProtocol {
+final class MatchViewModel {
   
   // MARK: - Public Instance Attributes
   var chipAdded: DynamicBinderInterface<Chip?> { return chipAddedBinder.interface }
@@ -45,7 +28,7 @@ final class MatchViewModel: MatchViewModelProtocol {
     
   }
   
-  func updateTempChip(column: Int?) {
+  func updateTempChip(at column: Int?) {
     
   }
   

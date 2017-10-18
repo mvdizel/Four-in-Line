@@ -23,13 +23,12 @@
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="utU-rT-p8u">
                     <rect key="frame" x="0.0" y="94.5" width="559" height="279.5"/>
-                    <color key="backgroundColor" red="0.92134684320000004" green="0.86646538969999998" blue="0.93512964249999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="utU-rT-p8u" secondAttribute="height" multiplier="2:1" id="6Xa-cq-uP1"/>
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <gestureRecognizers/>
             <constraints>
                 <constraint firstItem="utU-rT-p8u" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="KGj-VB-LQ4"/>

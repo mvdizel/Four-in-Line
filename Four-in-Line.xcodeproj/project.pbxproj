@@ -11,6 +11,9 @@
 		4D12338E1E9C19970004BC78 /* FILMatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D12338D1E9C19970004BC78 /* FILMatchViewController.swift */; };
 		4D520C551E8C59ED00848FCE /* FILGameAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D520C541E8C59ED00848FCE /* FILGameAI.swift */; };
 		4D520C571E8C5A3D00848FCE /* FILGameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D520C561E8C5A3D00848FCE /* FILGameManager.swift */; };
+		4DA60F001F97D91A00AD09E9 /* DynamicConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA60EFF1F97D91A00AD09E9 /* DynamicConstants.swift */; };
+		4DA60F031F97E94100AD09E9 /* ChipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA60F021F97E94100AD09E9 /* ChipView.swift */; };
+		4DA60F061F97E9CE00AD09E9 /* ChipViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA60F051F97E9CE00AD09E9 /* ChipViewModel.swift */; };
 		4DE3D9681E9BE87E00F214CE /* GameBoardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DE3D9671E9BE87E00F214CE /* GameBoardView.xib */; };
 		4DE3D96A1E9BE89800F214CE /* GameBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE3D9691E9BE89800F214CE /* GameBoardView.swift */; };
 		4DF18FE21EC76CF700185244 /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF18FE11EC76CF700185244 /* Notification+Extension.swift */; };
@@ -52,6 +55,9 @@
 		4D520C531E8C59ED00848FCE /* Four-in-Line-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Four-in-Line-Bridging-Header.h"; sourceTree = "<group>"; };
 		4D520C541E8C59ED00848FCE /* FILGameAI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FILGameAI.swift; sourceTree = "<group>"; };
 		4D520C561E8C5A3D00848FCE /* FILGameManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FILGameManager.swift; sourceTree = "<group>"; };
+		4DA60EFF1F97D91A00AD09E9 /* DynamicConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicConstants.swift; sourceTree = "<group>"; };
+		4DA60F021F97E94100AD09E9 /* ChipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipView.swift; sourceTree = "<group>"; };
+		4DA60F051F97E9CE00AD09E9 /* ChipViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipViewModel.swift; sourceTree = "<group>"; };
 		4DE3D9671E9BE87E00F214CE /* GameBoardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GameBoardView.xib; path = "Fouк-in-Line/Views/GameBoard/GameBoardView.xib"; sourceTree = SOURCE_ROOT; };
 		4DE3D9691E9BE89800F214CE /* GameBoardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameBoardView.swift; path = "Fouк-in-Line/Views/GameBoard/GameBoardView.swift"; sourceTree = SOURCE_ROOT; };
 		4DF18FE11EC76CF700185244 /* Notification+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
@@ -119,6 +125,7 @@
 		4D520C581E8C5BE600848FCE /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				4DA60F041F97E9B700AD09E9 /* Chip */,
 				D594D1371F5344F50034E9AB /* Match */,
 				4DFA528B1EC50909006FCC18 /* FILMatchViewModel.swift */,
 				4DF18FE91EC77BBD00185244 /* FILChipViewModel.swift */,
@@ -129,6 +136,22 @@
 				D594D1351F533D780034E9AB /* DirectNotificationl.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		4DA60F011F97E91000AD09E9 /* Chip */ = {
+			isa = PBXGroup;
+			children = (
+				4DA60F021F97E94100AD09E9 /* ChipView.swift */,
+			);
+			path = Chip;
+			sourceTree = "<group>";
+		};
+		4DA60F041F97E9B700AD09E9 /* Chip */ = {
+			isa = PBXGroup;
+			children = (
+				4DA60F051F97E9CE00AD09E9 /* ChipViewModel.swift */,
+			);
+			path = Chip;
 			sourceTree = "<group>";
 		};
 		4DF18FE01EC76C9400185244 /* Extensions */ = {
@@ -261,6 +284,7 @@
 				4D520C561E8C5A3D00848FCE /* FILGameManager.swift */,
 				4DF18FF11EC7915800185244 /* FILGameBoard.swift */,
 				4DF18FF31EC8DC0400185244 /* FILChipPosition.swift */,
+				4DA60EFF1F97D91A00AD09E9 /* DynamicConstants.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -268,6 +292,7 @@
 		FDFF69881B9C779C001697D4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4DA60F011F97E91000AD09E9 /* Chip */,
 				D594D1341F533C630034E9AB /* GameBoard */,
 				D594D12F1F533ADC0034E9AB /* Match */,
 				FDFF69891B9C78A1001697D4 /* GameBoardView1.h */,
@@ -435,10 +460,12 @@
 				4DF18FF41EC8DC0400185244 /* FILChipPosition.swift in Sources */,
 				FDFF698B1B9C78A1001697D4 /* GameBoardView1.m in Sources */,
 				D594D12A1F5331590034E9AB /* MatchViewModel.swift in Sources */,
+				4DA60F001F97D91A00AD09E9 /* DynamicConstants.swift in Sources */,
 				4DE3D96A1E9BE89800F214CE /* GameBoardView.swift in Sources */,
 				4DF18FEF1EC788B200185244 /* Weak.swift in Sources */,
 				FD53B89F1B9B63BD006B7D1A /* Game.m in Sources */,
 				4DF18FE81EC7770900185244 /* FILChipView.swift in Sources */,
+				4DA60F031F97E94100AD09E9 /* ChipView.swift in Sources */,
 				D594D1361F533D780034E9AB /* DirectNotificationl.swift in Sources */,
 				4D12338C1E9C126B0004BC78 /* DropBehavior.swift in Sources */,
 				FD53B8991B9B4955006B7D1A /* GameView.m in Sources */,
@@ -456,6 +483,7 @@
 				D57574B81D84872E00C8188C /* SettingsTableViewController.m in Sources */,
 				4DF18FE61EC773CD00185244 /* UIView+Extension.swift in Sources */,
 				4D520C571E8C5A3D00848FCE /* FILGameManager.swift in Sources */,
+				4DA60F061F97E9CE00AD09E9 /* ChipViewModel.swift in Sources */,
 				D594D1331F533B080034E9AB /* BaseViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
