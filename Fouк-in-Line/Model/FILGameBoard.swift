@@ -9,29 +9,29 @@
 import Foundation
 import CoreGraphics
 
-enum FieldStatus {
-    case player(Player)
-    case allowed
-    case unallowed
-    
-    func isEmpty() -> Bool {
-        switch self {
-        case .allowed, .unallowed:
-            return true
-        default:
-            return false
-        }
-    }
-    
-    func isAllowed() -> Bool {
-        switch self {
-        case .allowed:
-            return true
-        default:
-            return false
-        }
-    }
-}
+//enum FieldStatus {
+//    case player(Player)
+//    case allowed
+//    case unallowed
+//
+//    func isEmpty() -> Bool {
+//        switch self {
+//        case .allowed, .unallowed:
+//            return true
+//        default:
+//            return false
+//        }
+//    }
+//
+//    func isAllowed() -> Bool {
+//        switch self {
+//        case .allowed:
+//            return true
+//        default:
+//            return false
+//        }
+//    }
+//}
 
 class FILGameBoard {
     

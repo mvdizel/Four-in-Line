@@ -12,8 +12,12 @@ import DynamicBinder
 class ChipViewModel {
   
   // MARK: - Public Instance Attributes
-  var isTemp: DynamicBinderInterface<Bool> { return isTempBinder.interface }
-  var chipSize: DynamicBinderInterface<CGFloat> { return DynamicConstants.chipSize.interface }
+  var isTemp: DynamicBinderInterface<Bool> {
+    return isTempBinder.interface
+  }
+  var chipSize: DynamicBinderInterface<CGFloat> {
+    return DynamicConstants.chipSize.interface
+  }
   let chip: Chip
   
   

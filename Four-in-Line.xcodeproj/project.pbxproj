@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4D12338C1E9C126B0004BC78 /* DropBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D12338B1E9C126B0004BC78 /* DropBehavior.swift */; };
 		4D12338E1E9C19970004BC78 /* FILMatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D12338D1E9C19970004BC78 /* FILMatchViewController.swift */; };
+		4D51F8951FA917F700ACF67F /* GameBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D51F8941FA917F700ACF67F /* GameBoard.swift */; };
 		4D520C551E8C59ED00848FCE /* FILGameAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D520C541E8C59ED00848FCE /* FILGameAI.swift */; };
 		4D520C571E8C5A3D00848FCE /* FILGameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D520C561E8C5A3D00848FCE /* FILGameManager.swift */; };
 		4DA60F001F97D91A00AD09E9 /* DynamicConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA60EFF1F97D91A00AD09E9 /* DynamicConstants.swift */; };
@@ -52,6 +53,7 @@
 		3CE537654CA28ACBCAEB2221 /* Pods_Four_in_Line.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Four_in_Line.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D12338B1E9C126B0004BC78 /* DropBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropBehavior.swift; sourceTree = "<group>"; };
 		4D12338D1E9C19970004BC78 /* FILMatchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FILMatchViewController.swift; sourceTree = "<group>"; };
+		4D51F8941FA917F700ACF67F /* GameBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoard.swift; sourceTree = "<group>"; };
 		4D520C531E8C59ED00848FCE /* Four-in-Line-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Four-in-Line-Bridging-Header.h"; sourceTree = "<group>"; };
 		4D520C541E8C59ED00848FCE /* FILGameAI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FILGameAI.swift; sourceTree = "<group>"; };
 		4D520C561E8C5A3D00848FCE /* FILGameManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FILGameManager.swift; sourceTree = "<group>"; };
@@ -285,6 +287,7 @@
 				4DF18FF11EC7915800185244 /* FILGameBoard.swift */,
 				4DF18FF31EC8DC0400185244 /* FILChipPosition.swift */,
 				4DA60EFF1F97D91A00AD09E9 /* DynamicConstants.swift */,
+				4D51F8941FA917F700ACF67F /* GameBoard.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -463,6 +466,7 @@
 				4DA60F001F97D91A00AD09E9 /* DynamicConstants.swift in Sources */,
 				4DE3D96A1E9BE89800F214CE /* GameBoardView.swift in Sources */,
 				4DF18FEF1EC788B200185244 /* Weak.swift in Sources */,
+				4D51F8951FA917F700ACF67F /* GameBoard.swift in Sources */,
 				FD53B89F1B9B63BD006B7D1A /* Game.m in Sources */,
 				4DF18FE81EC7770900185244 /* FILChipView.swift in Sources */,
 				4DA60F031F97E94100AD09E9 /* ChipView.swift in Sources */,
@@ -619,7 +623,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "$(SRCROOT)/Fouк-in-Line/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mur.vasily.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -640,7 +644,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "$(SRCROOT)/Fouк-in-Line/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mur.vasily.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
