@@ -12,15 +12,9 @@ import DynamicBinder
 final class MatchViewModel {
   
   // MARK: - Public Instance Attributes
-  var chipAdded: DynamicBinderInterface<Chip?> { return chipAddedBinder.interface }
-  var tempChip: DynamicBinderInterface<Chip?> { return tempChipBinder.interface }
-  var gameStarted: DynamicBinderInterface<Void> { return gameStartedBinder.interface }
-  
-  
-  // MARK: - Private Instance Attributes
-  private let chipAddedBinder = DynamicBinder<Chip?>(nil)
-  private let tempChipBinder = DynamicBinder<Chip?>(nil)
-  private let gameStartedBinder = DynamicBinder<Void>(())
+  let chipAddedBinder = DynamicBinder<ChipViewModel?>(nil)
+  let tempChipBinder = DynamicBinder<ChipViewModel?>(nil)
+  let gameStartedBinder = DynamicBinder<Void>(())
   
   
   // MARK: - Public Instance Methods

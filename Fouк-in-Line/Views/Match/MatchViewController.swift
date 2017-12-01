@@ -6,13 +6,12 @@
 //  Copyright © 2017 Vasilii Muravev. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
-class MatchViewController: BaseViewController {
-  
+final class MatchViewController: BaseViewController {
+
   // MARK: - Public Instance Attributes
-  
-  
+
   // MARK: - Private Instance Attributes
   let viewModel = MatchViewModel()
 }

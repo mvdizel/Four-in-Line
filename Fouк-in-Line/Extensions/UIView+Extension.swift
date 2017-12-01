@@ -8,6 +8,7 @@
 
 import UIKit
 
+// MARK: - Public Instance Methods
 extension UIView {
   
   /// Returns UIView loaded from `xib` file with same name as owner class name.

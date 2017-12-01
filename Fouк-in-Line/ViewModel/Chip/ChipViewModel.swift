@@ -6,30 +6,22 @@
 //  Copyright © 2017 Vasilii Muravev. All rights reserved.
 //
 
-import UIKit
+import Foundation
 import DynamicBinder
 
-class ChipViewModel {
-  
+/// A class for defining and implementing chip logic.
+final class ChipViewModel {
+
   // MARK: - Public Instance Attributes
-  var isTemp: DynamicBinderInterface<Bool> {
-    return isTempBinder.interface
-  }
+  let isTemp: DynamicBinder<Bool>
   var chipSize: DynamicBinderInterface<CGFloat> {
     return DynamicConstants.chipSize.interface
   }
-  let chip: Chip
-  
-  
-  // MARK: - Private Instance Attributes
-  private let isTempBinder = DynamicBinder<Bool>(false)
-  
-  
+  let position: ChipPosition
+
   // MARK: - Initializers
-  init(_ chip: Chip) {
-    self.chip = chip
+  init(positon: ChipPosition, isTemp: Bool) {
+    self.position = positon
+    self.isTemp = DynamicBinder(isTemp)
   }
-  
-  
-  // MARK: - Public Instance Methods
 }

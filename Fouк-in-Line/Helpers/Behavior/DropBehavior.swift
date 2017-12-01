@@ -26,6 +26,7 @@ class DropBehavior: UIDynamicBehavior {
 
 // MARK: - UICollisionBehaviorDelegate
 extension DropBehavior: UICollisionBehaviorDelegate {
+  // swiftlint:disable identifier_name
   func collisionBehavior(_ behavior: UICollisionBehavior, beganContactFor item1: UIDynamicItem, with item2: UIDynamicItem, at p: CGPoint) {
     NotificationCenter.default.post(name: .ItemDropped, object: item1, userInfo: [UserInfoAttributes.contactedWith: item2])
     NotificationCenter.default.post(name: .ItemDropped, object: item2, userInfo: [UserInfoAttributes.contactedWith: item1])
@@ -38,6 +39,7 @@ extension DropBehavior: UICollisionBehaviorDelegate {
     }
     NotificationCenter.default.post(name: .ItemDropped, object: item)
   }
+  // swiftlint:enable identifier_name
 }
 
 
@@ -69,7 +71,8 @@ private extension DropBehavior {
     let behavior = UIGravityBehavior()
     addChildBehavior(behavior)
     gravityBehavior = behavior
-    gravityBehavior.magnitude = 2 // TODO: Play with magnitude
+    // @TODO: Play with magnitude
+    gravityBehavior.magnitude = 2
   }
   
   func addCollisionBehavior() {

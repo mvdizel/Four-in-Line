@@ -8,44 +8,35 @@
 
 import UIKit
 
-class ChipView: UIImageView {
-  
+final class ChipView: UIView {
+
   // MARK: - Public Instance Attributes
   let viewModel: ChipViewModel
-  
-  
+
+  // MARK: - Private Instance Attributes
+  private let imageView = UIImageView()
+
   // MARK: - Initializers
-  init(frame: CGRect, viewModel: ChipViewModel) {
+  init(viewModel: ChipViewModel) {
     self.viewModel = viewModel
-    super.init(frame: frame)
+    super.init(frame: viewModel.position.frame)
     setup()
   }
-  
+
   @available(*, unavailable) required init?(coder aDecoder: NSCoder) {
-    fatalError("unavailable")
-  }
-  
-  @available(*, unavailable) override init(frame: CGRect) {
-    fatalError("unavailable")
-  }
-  
-  @available(*, unavailable) override init(image: UIImage?) {
-    fatalError("unavailable")
-  }
-  
-  @available(*, unavailable) override init(image: UIImage?, highlightedImage: UIImage?) {
     fatalError("unavailable")
   }
 }
 
-
 // MARK: - Private Instance Methods
 private extension ChipView {
   func setup() {
-    viewModel.chipSize.bindAndFire(with: self) { [weak self] (size) in
+    addSubview(imageView)
+//    addc
+    viewModel.chipSize.bindAndFire(with: self) { [weak self] _ in
       self?.updateFrame()
     }
-    viewModel.isTemp.bindAndFire(with: self) { [weak self] (isTemp) in
+    viewModel.isTemp.bindAndFire(with: self) { [weak self] isTemp in
       self?.updateFrame()
       self?.alpha = isTemp ? 0.5 : 1.0
     }
@@ -54,15 +45,10 @@ private extension ChipView {
   }
 
   func updateFrame() {
-//    let size = viewModel.chipSize.value
-//    let x = viewModel.position.point(.inView).x * size + ChipImageInsets
-//    var y = viewModel.position.point(.inView).y * size
-//    if viewModel.isTemporary.value {
-//      y = 0.0
-//    } else if viewModel.isInMotion.value {
-//      y = frame.origin.y
-//    }
-//    frame = CGRect(x: x, y: y, width: size - ChipImageInsets * 2, height: size)
+    var chipFrame = viewModel.position.frame
+    if viewModel.isTemp.value {
+      chipFrame.origin.y = 0.0
+    }
+    frame = chipFrame
   }
 }
-

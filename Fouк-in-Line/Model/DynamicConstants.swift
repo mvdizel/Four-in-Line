@@ -9,15 +9,9 @@
 import Foundation
 import DynamicBinder
 
-class DynamicConstants {
-  
-  // MARK: - Public Class Attribites
+/// An enum for defining dynamically changing constants.
+enum DynamicConstants {
   static let chipSize = DynamicBinder<CGFloat>(0)
-  
-  
-  // MARK: - Initializers
-  @available(*, unavailable) private init() {
-    fatalError("unavailable")
-  }
+  static let numberOfRows = DynamicBinder<Int>(6)
+  static let numberOfColumns = DynamicBinder<Int>(7)
 }
-
