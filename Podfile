@@ -6,5 +6,6 @@ target 'Four-in-Line' do
     use_frameworks!
     
   	pod 'DynamicBinder'
+  	pod 'SwiftLint'
     
 end
