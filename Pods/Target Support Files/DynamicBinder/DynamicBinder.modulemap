@@ -1,0 +1,6 @@
+framework module DynamicBinder {
+  umbrella header "DynamicBinder-umbrella.h"
+
+  export *
+  module * { export * }
+}
