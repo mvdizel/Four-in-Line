@@ -7,17 +7,16 @@
 //
 
 struct Weak<T: AnyObject> {
-    
-    // MARK: - Public Instance Attributes
-    fileprivate(set) weak var value: T?
-    
-    
-    // MARK: - Initializers
-    init(_ value: T) {
-        self.value = value
-    }
-    
-    @available(*, unavailable) init() {
-        fatalError("unavailable")
-    }
+
+  // MARK: - Public Instance Attributes
+  fileprivate(set) weak var value: T?
+
+  // MARK: - Initializers
+  init(_ value: T) {
+    self.value = value
+  }
+
+  @available(*, unavailable) init() {
+    fatalError("unavailable")
+  }
 }

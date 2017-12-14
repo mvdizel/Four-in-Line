@@ -59,7 +59,8 @@
 //        }
 //        image = viewModel.player.image()
 //        contentMode = .scaleAspectFit
-//        NotificationCenter.default.addObserver(forName: .ItemDropped, object: self, queue: nil) { [weak viewModel] (notif) in
+//        NotificationCenter.default.addObserver(forName: .ItemDropped,
+//object: self, queue: nil) { [weak viewModel] (notif) in
 //            guard let viewModel = viewModel else { return }
 //            guard let secondView = notif.userInfo?[UserInfoAttributes.contactedWith] as? FILChipView else {
 //                viewModel.chipDroppedWithContact(of: nil)

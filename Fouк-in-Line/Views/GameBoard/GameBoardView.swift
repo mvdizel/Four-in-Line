@@ -11,8 +11,8 @@ import UIKit
 @IBDesignable final class GameBoardView: UIView {
   
   // MARK: - IBOutlets
-  @IBOutlet fileprivate weak var boardView: UIView!
-  @IBOutlet fileprivate weak var boardViewAspectRatioConstraint: NSLayoutConstraint! {
+  @IBOutlet private weak var boardView: UIView!
+  @IBOutlet private weak var boardViewAspectRatioConstraint: NSLayoutConstraint! {
     didSet {
       columnsToRowsAspectRatioConstraint = boardViewAspectRatioConstraint
       buildGameBoard()
@@ -22,14 +22,18 @@ import UIKit
   
   // MARK: - @IBInspectables
   @IBInspectable var numOfColumns: Int {
-    get { return Int(boardSize.width) }
+    get {
+      return Int(boardSize.width)
+    }
     set {
       boardSize.width = CGFloat(max(newValue, 1))
       buildGameBoard()
     }
   }
   @IBInspectable var numOfRows: Int {
-    get { return Int(boardSize.height) }
+    get {
+      return Int(boardSize.height)
+    }
     set {
       boardSize.height = CGFloat(max(newValue, 1))
       buildGameBoard()
@@ -38,22 +42,17 @@ import UIKit
   
   
   // MARK: - Public Instance Properties
-  weak var viewModel: MatchViewModelProtocol! {
-    didSet {
-      setup()
-    }
-  }
-  var chipSize: CGFloat {
-    return boardView.bounds.width / CGFloat(numOfColumns)
-  }
+  weak var viewModel: MatchViewModel! { didSet { setup() }}
+  var chipSize: CGFloat { return DynamicConstants.chipSize.value }
   
   
   // MARK: - Private Instance Properties
-  fileprivate var boardSize = CGSize(width: 1, height: 1)
-  fileprivate var columnsToRowsAspectRatioConstraint: NSLayoutConstraint!
-  fileprivate var animator: UIDynamicAnimator!
-  fileprivate var dropBehavior = DropBehavior()
-  fileprivate var color: UIColor = .orange
+  private var boardSize = CGSize(width: 1, height: 1)
+  private var columnsToRowsAspectRatioConstraint: NSLayoutConstraint!
+  private var animator: UIDynamicAnimator!
+  private var dropBehavior = DropBehavior()
+  private var color: UIColor = .orange
+  private weak var topView: UIView!
   
   
   // MARK: - Initializers
@@ -61,41 +60,41 @@ import UIKit
     super.init(frame: frame)
     initializeView()
   }
-  
+
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
     initializeView()
   }
-}
-
-
-// MARK: - Lyfecicle
-extension GameBoardView {
-  override func layoutSubviews() {
-    super.layoutSubviews()
-//    viewModel?.chipSize = chipSize
+  
+  
+  // MARK: - Lyfecycle
+  override func draw(_ rect: CGRect) {
+    super.draw(rect)
+    let chipSize = boardView.bounds.width / CGFloat(numOfColumns)
+    DynamicConstants.chipSize.value = chipSize
   }
 }
 
 
 // MARK: - @IBActions
-extension GameBoardView {
+private extension GameBoardView {
   @IBAction func longPress(_ sender: UILongPressGestureRecognizer) {
-    guard let _ = viewModel else { return }
+    guard let viewModel = viewModel else { return }
     let location = sender.location(in: boardView)
-    if location.x < 0 || location.x > boardView.bounds.width {
-      viewModel.updateTempChip(column: nil)
+    guard location.x >= 0, location.x <= boardView.bounds.width else {
+      viewModel.updateTempChip(at: nil)
       return
     }
     let x = max(0.0, min(boardView.bounds.width - 0.1, location.x))
     let column = Int(x / chipSize)
     switch sender.state {
-    case .began, .changed:
-      viewModel.updateTempChip(column: column)
+    case .began, .changed, .possible:
+      viewModel.updateTempChip(at: column)
     case .ended:
-      viewModel.updateTempChip(column: nil)
-    case .cancelled, .failed, .possible:
-      viewModel.updateTempChip(column: nil)
+      viewModel.updateTempChip(at: nil)
+      viewModel.addChip(at: column)
+    case .cancelled, .failed:
+      viewModel.updateTempChip(at: nil)
     }
   }
 }
@@ -104,30 +103,34 @@ extension GameBoardView {
 // MARK: - Public Instance Methods
 extension GameBoardView {
   func drop() {
-    let column = arc4random_uniform(UInt32(numOfColumns))
-    let blockSize: CGFloat = boardView.bounds.width / CGFloat(numOfColumns)
-    let frame = CGRect(x: CGFloat(column) * blockSize, y: 0.1, width: blockSize, height: blockSize)
-    let newView = UIView(frame: frame)
-    color = color == UIColor.brown ? UIColor.orange : UIColor.brown
-    newView.backgroundColor = color
-    boardView.addSubview(newView)
-    dropBehavior.add(newView)
-    print("column \(column) max column \(numOfColumns)")
+    let column = Int(arc4random_uniform(UInt32(numOfColumns)))
+    drop(at: column)
   }
 }
 
 
 // MARK: - Private Instance Methods
-fileprivate extension GameBoardView {
+private extension GameBoardView {
+  func drop(at column: Int) {
+    let frame = CGRect(x: CGFloat(column) * chipSize, y: 0.1, width: chipSize, height: chipSize)
+    let newView = UIView(frame: frame)
+    color = color == UIColor.brown ? UIColor.orange : UIColor.brown
+    newView.backgroundColor = color
+    boardView.addSubview(newView)
+    dropBehavior.add(newView)
+  }
+
+  /// Initializes view from nib file.
   func initializeView() {
-    addSubview(loadXibView(with: bounds))
+    topView = loadXibView()
     animator = UIDynamicAnimator(referenceView: boardView)
     animator.addBehavior(dropBehavior)
   }
-  
+
+  /// Builds UI for current gameboard.
   func buildGameBoard() {
     guard let ratioConstraint = columnsToRowsAspectRatioConstraint,
-          let _ = boardView,
+          boardView != nil,
           numOfRows > 0 else {
       return
     }
@@ -137,8 +140,9 @@ fileprivate extension GameBoardView {
     boardView.addConstraint(newRatioConstraint)
     columnsToRowsAspectRatioConstraint = newRatioConstraint
     boardView.setNeedsLayout()
+    boardView.layoutIfNeeded()
   }
-  
+
   func setup() {
 //    viewModel.chipSize = chipSize
 //    viewModel.chipAdded.bind(with: self) { [weak self] (chipView) in

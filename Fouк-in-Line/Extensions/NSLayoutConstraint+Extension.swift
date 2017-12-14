@@ -8,8 +8,9 @@
 
 import UIKit
 
+// MARK: - Public Instance Methods
 extension NSLayoutConstraint {
-  
+
   /// Returns a copy of current constraint with a different multiplier.
   func copy(multiplier newMultiplier: CGFloat) -> NSLayoutConstraint {
     let newConstraint = NSLayoutConstraint(

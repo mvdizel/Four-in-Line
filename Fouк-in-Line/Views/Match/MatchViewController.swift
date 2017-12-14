@@ -6,13 +6,25 @@
 //  Copyright © 2017 Vasilii Muravev. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
-class MatchViewController: BaseViewController {
+final class MatchViewController: BaseViewController {
+  
+  // MARK: - IBOutlets
+  @IBOutlet private weak var gameBoardView: GameBoardView!
+  
   
   // MARK: - Public Instance Attributes
   
   
   // MARK: - Private Instance Attributes
   let viewModel = MatchViewModel()
+}
+
+
+// MARK: - IBActions
+extension MatchViewController {
+  @IBAction func buttonTapped(_ sender: Any) {
+    gameBoardView.drop()
+  }
 }

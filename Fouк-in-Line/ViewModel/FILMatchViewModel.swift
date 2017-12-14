@@ -48,7 +48,8 @@
 //    }
 //    var chipSize: CGFloat = 0.0 {
 //        didSet {
-//            NotificationCenter.default.post(name: .ChipSizeChanged, object: nil, userInfo: [UserInfoAttributes.chipSize: chipSize])
+//            NotificationCenter.default.post(name: .ChipSizeChanged,
+//object: nil, userInfo: [UserInfoAttributes.chipSize: chipSize])
 //        }
 //    }
 //    
@@ -90,7 +91,8 @@
 //// MARK: - Private Instance Methods
 //fileprivate extension FILMatchViewModel {
 //    func setup() {
-//        NotificationCenter.default.addObserver(forName: .NewGameStarted, object: nil, queue: nil) { [weak self] (notification) in
+//        NotificationCenter.default.addObserver(forName: .NewGameStarted,
+//object: nil, queue: nil) { [weak self] (notification) in
 //            guard let strongSelf = self else { return }
 //            strongSelf.removeChipsBinder.value = ()
 //        }
@@ -102,7 +104,8 @@
 //            if let _ = strongSelf.tempChipView {
 //                return
 //            }
-//            let chipViewModel = FILViewModelsManager.chipViewModel(for: moveCondition.player, at: moveCondition.position)
+//            let chipViewModel = FILViewModelsManager.chipViewModel(for: moveCondition.player,
+//at: moveCondition.position)
 //            let chipView = FILChipView(frame: CGRect.zero, viewModel: chipViewModel)
 //            chipViewModel.configureChip(size: strongSelf.chipSize, motion: false, temporary: true)
 //            strongSelf.chipAddedBinder.value = chipView
@@ -114,7 +117,8 @@
 //                  let moveCondition = moveCondition else {
 //                return
 //            }
-//            let chipViewModel = FILViewModelsManager.chipViewModel(for: moveCondition.player, at: moveCondition.position)
+//            let chipViewModel = FILViewModelsManager.chipViewModel(for: moveCondition.player,
+//at: moveCondition.position)
 //            let chipView = FILChipView(frame: CGRect.zero, viewModel: chipViewModel)
 //            chipViewModel.configureChip(size: strongSelf.chipSize, motion: true, temporary: false)
 //            chipViewModel.isDropped.bind(with: strongSelf, { [weak chipView] (isDropped) in
