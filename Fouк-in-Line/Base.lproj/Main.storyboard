@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="q0A-xF-3SW">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="q0A-xF-3SW">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -39,8 +39,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pdt-3T-N3v" customClass="GameBoardView" customModule="Four_in_Line" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="88" width="375" height="596"/>
-                                <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="16" y="96" width="343" height="620"/>
+                                <color key="backgroundColor" red="0.14936298789999999" green="0.2474710815" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="numOfColumns">
                                         <integer key="value" value="7"/>
@@ -51,27 +51,33 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W5h-4B-p5t">
-                                <rect key="frame" x="164.66666666666666" y="740" width="46" height="30"/>
+                                <rect key="frame" x="164" y="740" width="46" height="30"/>
                                 <state key="normal" title="Button">
                                     <color key="titleColor" red="0.95686274510000002" green="0.95686274510000002" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </state>
+                                <connections>
+                                    <action selector="buttonTapped:" destination="MUO-gd-AMb" eventType="touchUpInside" id="i9R-G3-ozA"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.26274509800000001" green="0.57254901960000004" blue="0.94509803920000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="Pdt-3T-N3v" secondAttribute="trailing" constant="-16" id="GK0-46-9pK"/>
+                            <constraint firstItem="Pdt-3T-N3v" firstAttribute="leading" secondItem="pOY-zF-bGW" secondAttribute="leadingMargin" id="9hj-MU-pkm"/>
                             <constraint firstItem="dYc-1G-oxw" firstAttribute="top" secondItem="W5h-4B-p5t" secondAttribute="bottom" constant="8" symbolic="YES" id="Ib3-Yt-Evg"/>
-                            <constraint firstItem="Pdt-3T-N3v" firstAttribute="leading" secondItem="pOY-zF-bGW" secondAttribute="leadingMargin" constant="-16" id="TmO-Bu-LXa"/>
-                            <constraint firstItem="W5h-4B-p5t" firstAttribute="centerX" secondItem="Pdt-3T-N3v" secondAttribute="centerX" id="eUK-4M-lQT"/>
-                            <constraint firstItem="Pdt-3T-N3v" firstAttribute="top" secondItem="8g8-fg-lkt" secondAttribute="bottom" id="fUE-QJ-Rlq"/>
-                            <constraint firstItem="dYc-1G-oxw" firstAttribute="top" secondItem="Pdt-3T-N3v" secondAttribute="bottom" constant="94" id="iEP-4b-CKB"/>
+                            <constraint firstItem="Pdt-3T-N3v" firstAttribute="centerY" secondItem="pOY-zF-bGW" secondAttribute="centerY" id="O9X-F5-rMj"/>
+                            <constraint firstItem="W5h-4B-p5t" firstAttribute="centerX" secondItem="pOY-zF-bGW" secondAttribute="centerX" id="SlH-hL-DII"/>
+                            <constraint firstItem="Pdt-3T-N3v" firstAttribute="centerX" secondItem="pOY-zF-bGW" secondAttribute="centerX" id="gfG-aX-3Zs"/>
+                            <constraint firstItem="Pdt-3T-N3v" firstAttribute="top" secondItem="8g8-fg-lkt" secondAttribute="bottom" constant="8" id="htW-zO-2fy"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="BlN-xq-WRL"/>
+                    <connections>
+                        <outlet property="gameBoardView" destination="Pdt-3T-N3v" id="zXD-VY-Thf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yve-d5-68w" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="216" y="1800"/>
+            <point key="canvasLocation" x="215.5" y="1800"/>
         </scene>
     </scenes>
 </document>

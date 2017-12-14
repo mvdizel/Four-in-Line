@@ -10,19 +10,22 @@ import UIKit
 
 // MARK: - Public Instance Methods
 extension UIView {
-  
+
   /// Returns UIView loaded from `xib` file with same name as owner class name.
-  func loadXibView(with rext: CGRect) -> UIView {
+  func loadXibView() -> UIView {
     let bundle = Bundle(for: type(of: self))
     let nibName = String(describing: type(of: self))
     let nib = UINib(nibName: nibName, bundle: bundle)
     let nibViews = nib.instantiate(withOwner: self, options: nil)
-    for nibObject in nibViews {
-      guard let view = nibObject as? UIView else { continue }
-      view.frame = rext
-      view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-      return view
+    guard let view = nibViews.first(where: { $0 is UIView }) as? UIView else {
+      return UIView(frame: bounds)
     }
-    return UIView()
+    view.frame = bounds
+    addSubview(view)
+    topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+    leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+    bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+    trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+    return view
   }
 }

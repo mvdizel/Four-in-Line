@@ -155,8 +155,6 @@
 			isa = PBXGroup;
 			children = (
 				4D520C561E8C5A3D00848FCE /* MatchManager.swift */,
-				4D578DBF1FCF67E60001AE32 /* Player.swift */,
-				4D578DC11FCF67EF0001AE32 /* Difficulty.swift */,
 			);
 			path = Match;
 			sourceTree = "<group>";
@@ -307,6 +305,8 @@
 		FD53B8A01B9B63C1006B7D1A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				4D578DC11FCF67EF0001AE32 /* Difficulty.swift */,
+				4D578DBF1FCF67E60001AE32 /* Player.swift */,
 				4DCEA0B41FD1E00A007BF99E /* GameAI */,
 				4D578DBA1FCF5A620001AE32 /* Match */,
 				D594D12C1F5332E70034E9AB /* GameBoard */,

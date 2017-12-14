@@ -49,6 +49,7 @@ import UIKit
   private var animator: UIDynamicAnimator!
   private var dropBehavior = DropBehavior()
   private var color: UIColor = .orange
+  private weak var topView: UIView!
 
   // MARK: - Initializers
   override init(frame: CGRect) {
@@ -62,9 +63,10 @@ import UIKit
   }
 
   // MARK: - Lyfecycle
-  override func layoutSubviews() {
-    super.layoutSubviews()
-    DynamicConstants.chipSize.value = boardView.bounds.width / CGFloat(numOfColumns)
+  override func draw(_ rect: CGRect) {
+    super.draw(rect)
+    let chipSize = boardView.bounds.width / CGFloat(numOfColumns)
+    DynamicConstants.chipSize.value = chipSize
   }
 }
 
@@ -93,34 +95,27 @@ private extension GameBoardView {
 
 // MARK: - Public Instance Methods
 extension GameBoardView {
-//  func drop() {
-//    let column = Int(arc4random_uniform(UInt32(numOfColumns)))
-//    drop(at: column)
-//  }
+  func drop() {
+    let column = Int(arc4random_uniform(UInt32(numOfColumns)))
+    drop(at: column)
+  }
 }
 
 // MARK: - Private Instance Methods
 private extension GameBoardView {
   func drop(at column: Int) {
-//    let frame = CGRect(x: CGFloat(column) * blockSize, y: 0.1, width: chipSize, height: chipSize)
-//    let newView = UIView(frame: frame)
-//    color = color == UIColor.brown ? UIColor.orange : UIColor.brown
-//    newView.backgroundColor = color
-//    boardView.addSubview(newView)
-//    dropBehavior.add(newView)
-//    print("column \(column) max column \(numOfColumns)")
+    let frame = CGRect(x: CGFloat(column) * chipSize, y: 0.1, width: chipSize, height: chipSize)
+    let newView = UIView(frame: frame)
+    color = color == UIColor.brown ? UIColor.orange : UIColor.brown
+    newView.backgroundColor = color
+    boardView.addSubview(newView)
+    dropBehavior.add(newView)
   }
 
   func initializeView() {
-    addSubview(loadXibView(with: bounds))
+    topView = loadXibView()
     animator = UIDynamicAnimator(referenceView: boardView)
     animator.addBehavior(dropBehavior)
-    let headerView = UIView()
-    headerView.backgroundColor = .yellow
-    headerView.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
-    addSubview(headerView)
-    let views = ["headerView": headerView]
-    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[headerView]|", options: .alignAllBottom, metrics: nil, views: views))
   }
 
   func buildGameBoard() {
@@ -135,6 +130,7 @@ private extension GameBoardView {
     boardView.addConstraint(newRatioConstraint)
     columnsToRowsAspectRatioConstraint = newRatioConstraint
     boardView.setNeedsLayout()
+    boardView.layoutIfNeeded()
   }
 
   func setup() {

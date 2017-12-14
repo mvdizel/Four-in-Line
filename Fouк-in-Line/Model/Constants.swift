@@ -11,7 +11,7 @@ import CoreGraphics
 
 /// An enum for defining constants.
 enum Constants {
-  
+
   /// Constants for the views.
   enum Views {
     static let chipImageInset: CGFloat = 2

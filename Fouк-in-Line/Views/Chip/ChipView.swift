@@ -14,7 +14,7 @@ final class ChipView: UIView {
   let viewModel: ChipViewModel
 
   // MARK: - Private Instance Attributes
-  private let imageView = UIImageView()
+  private weak var imageView: UIImageView!
 
   // MARK: - Initializers
   init(viewModel: ChipViewModel) {
@@ -31,8 +31,6 @@ final class ChipView: UIView {
 // MARK: - Private Instance Methods
 private extension ChipView {
   func setup() {
-    addSubview(imageView)
-//    addc
     viewModel.chipSize.bindAndFire(with: self) { [weak self] _ in
       self?.updateFrame()
     }
@@ -40,8 +38,11 @@ private extension ChipView {
       self?.updateFrame()
       self?.alpha = isTemp ? 0.5 : 1.0
     }
-//    image = viewModel.image()
-    contentMode = .scaleAspectFit
+    let imageView = UIImageView()
+    self.imageView = imageView
+    addSubview(imageView)
+    imageView.image = viewModel.position.player?.image()
+    imageView.contentMode = .scaleAspectFit
   }
 
   func updateFrame() {
@@ -50,5 +51,13 @@ private extension ChipView {
       chipFrame.origin.y = 0.0
     }
     frame = chipFrame
+    // @TODO: Use autolayout.
+    let imageInset: CGFloat = 0.1
+    var imageFrame = bounds
+    imageFrame.origin.x = bounds.width * imageInset
+    imageFrame.origin.y = bounds.height * imageInset
+    imageFrame.size.width = bounds.width * (1.0 - imageInset * 2.0)
+    imageFrame.size.height = bounds.height * (1.0 - imageInset * 2.0)
+    imageView.frame = imageFrame
   }
 }

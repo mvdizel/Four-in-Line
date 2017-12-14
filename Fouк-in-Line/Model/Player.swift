@@ -12,14 +12,14 @@ import UIKit
 enum Player: Int {
   case human = 0
   case phone
-  
+
   /// Returns next player in order.
   ///
   /// - Returns: A `Player` next in order after current.
   func next() -> Player {
     return self == .human ? .phone : .human
   }
-  
+
   /// Returns an image, related to the current player.
   ///
   /// - Returns: A `UIImage` related to the current user.
