@@ -9,7 +9,7 @@
 import UIKit
 
 @IBDesignable final class GameBoardView: UIView {
-
+  
   // MARK: - IBOutlets
   @IBOutlet private weak var boardView: UIView!
   @IBOutlet private weak var boardViewAspectRatioConstraint: NSLayoutConstraint! {
@@ -18,7 +18,8 @@ import UIKit
       buildGameBoard()
     }
   }
-
+  
+  
   // MARK: - @IBInspectables
   @IBInspectable var numOfColumns: Int {
     get {
@@ -38,11 +39,13 @@ import UIKit
       buildGameBoard()
     }
   }
-
+  
+  
   // MARK: - Public Instance Properties
   weak var viewModel: MatchViewModel! { didSet { setup() }}
   var chipSize: CGFloat { return DynamicConstants.chipSize.value }
-
+  
+  
   // MARK: - Private Instance Properties
   private var boardSize = CGSize(width: 1, height: 1)
   private var columnsToRowsAspectRatioConstraint: NSLayoutConstraint!
@@ -50,7 +53,8 @@ import UIKit
   private var dropBehavior = DropBehavior()
   private var color: UIColor = .orange
   private weak var topView: UIView!
-
+  
+  
   // MARK: - Initializers
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -61,7 +65,8 @@ import UIKit
     super.init(coder: aDecoder)
     initializeView()
   }
-
+  
+  
   // MARK: - Lyfecycle
   override func draw(_ rect: CGRect) {
     super.draw(rect)
@@ -69,6 +74,7 @@ import UIKit
     DynamicConstants.chipSize.value = chipSize
   }
 }
+
 
 // MARK: - @IBActions
 private extension GameBoardView {
@@ -93,6 +99,7 @@ private extension GameBoardView {
   }
 }
 
+
 // MARK: - Public Instance Methods
 extension GameBoardView {
   func drop() {
@@ -100,6 +107,7 @@ extension GameBoardView {
     drop(at: column)
   }
 }
+
 
 // MARK: - Private Instance Methods
 private extension GameBoardView {
@@ -112,12 +120,14 @@ private extension GameBoardView {
     dropBehavior.add(newView)
   }
 
+  /// Initializes view from nib file.
   func initializeView() {
     topView = loadXibView()
     animator = UIDynamicAnimator(referenceView: boardView)
     animator.addBehavior(dropBehavior)
   }
 
+  /// Builds UI for current gameboard.
   func buildGameBoard() {
     guard let ratioConstraint = columnsToRowsAspectRatioConstraint,
           boardView != nil,

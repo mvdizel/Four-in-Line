@@ -11,19 +11,23 @@ import DynamicBinder
 
 /// A singleton class for managing game match.
 final class MatchManager {
-
+  
   // MARK: - Singleton
   static let shared = MatchManager()
-
+  
+  
   // MARK: - Public Instance Attributes
 //  private(set) var currentPlayer: Player = .human
-
+  
+  
   // MARK: - Private Instance Attributes
   private let gameBoard = GameBoard()
-
+  
+  
   // MARK: - Initializers
   private init() {}
 }
+
 
 // MARK: Public Instance Methods
 extension MatchManager {

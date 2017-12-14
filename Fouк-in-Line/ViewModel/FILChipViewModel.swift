@@ -60,7 +60,8 @@
 //    init(for player: Player, at position: FILChipPosition) {
 //        self.player = player
 //        self.position = position
-//        NotificationCenter.default.addObserver(forName: .ChipSizeChanged, object: nil, queue: nil) { [weak self] (notif) in
+//        NotificationCenter.default.addObserver(forName: .ChipSizeChanged,
+//object: nil, queue: nil) { [weak self] (notif) in
 //            guard let strongSelf = self,
 //                  let chipSize = notif.userInfo?[UserInfoAttributes.chipSize] as? CGFloat else {
 //                return

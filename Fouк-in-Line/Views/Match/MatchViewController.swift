@@ -9,15 +9,18 @@
 import Foundation
 
 final class MatchViewController: BaseViewController {
-
+  
   // MARK: - IBOutlets
   @IBOutlet private weak var gameBoardView: GameBoardView!
-
+  
+  
   // MARK: - Public Instance Attributes
-
+  
+  
   // MARK: - Private Instance Attributes
   let viewModel = MatchViewModel()
 }
+
 
 // MARK: - IBActions
 extension MatchViewController {

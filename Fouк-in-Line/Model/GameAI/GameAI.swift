@@ -10,17 +10,18 @@ import Foundation
 
 /// A singleton, defining Artificial Intelligence of game.
 final class GameAI {
-
+  
   // MARK: - Singleton
   static let shared = GameAI()
-
+  
+  
   // MARK: - Initializers
   private init() {}
 }
 
 // MARK: Public Instance Methods
 extension GameAI {
-
+  
   /// Searches and makes the best move on the gameboard.
   ///
   /// - Parameters:
@@ -32,9 +33,10 @@ extension GameAI {
   }
 }
 
+
 // MARK: Private Instance Methods
 private extension GameAI {
-
+  
   /// Searches for the first available move on the gameboard.
   ///
   /// - Parameter gameBoard: A `GameBoard` with current game state

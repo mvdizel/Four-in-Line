@@ -144,7 +144,8 @@
 //            if score == .win || _depth >= _maxDepth {
 //                scoreLvl = scoreLevel(score)
 //            } else {
-//                scoreLvl = positionValuationForPlayer(player.nextPlayer(), alpha: -beta, beta: -alpha, isFork: willBeFork)
+//                scoreLvl = positionValuationForPlayer(player.nextPlayer(),
+//alpha: -beta, beta: -alpha, isFork: willBeFork)
 //            }
 //            cancelMoveForPlayer(player, atPoint: CGPoint(x: x, y: y))
 //            if scoreLvl > alpha {
@@ -188,7 +189,9 @@
 //            _firstPlayerWinLine |= CellStatus.firstPlayer.rawValue << (UInt(i) * CellStatus.step)
 //            _secondPlayerWinLine |= CellStatus.secondPlayer.rawValue << (UInt(i) * CellStatus.step)
 //        }
-//        _firstPlayerWinLine = ((_firstPlayerWinLine >> CellStatus.step) << CellStatus.step) | CellStatus.allowed.rawValue | CellStatus.allowed.rawValue << (UInt(WinLineSize) * CellStatus.step)
+//        _firstPlayerWinLine = ((_firstPlayerWinLine >> CellStatus.step)
+//<< CellStatus.step) | CellStatus.allowed.rawValue | C
+//ellStatus.allowed.rawValue << (UInt(WinLineSize) * CellStatus.step)
 //        _gameboard = Array(repeating: [], count: 4)
 //        for i in 0..<4 {
 //            var linesCount = 0
@@ -220,4 +223,3 @@
 //        }
 //    }
 //}
-

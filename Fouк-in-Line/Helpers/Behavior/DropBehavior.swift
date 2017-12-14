@@ -27,12 +27,26 @@ class DropBehavior: UIDynamicBehavior {
 // MARK: - UICollisionBehaviorDelegate
 extension DropBehavior: UICollisionBehaviorDelegate {
   // swiftlint:disable identifier_name
-  func collisionBehavior(_ behavior: UICollisionBehavior, beganContactFor item1: UIDynamicItem, with item2: UIDynamicItem, at p: CGPoint) {
-    NotificationCenter.default.post(name: .ItemDropped, object: item1, userInfo: [UserInfoAttributes.contactedWith: item2])
-    NotificationCenter.default.post(name: .ItemDropped, object: item2, userInfo: [UserInfoAttributes.contactedWith: item1])
+  func collisionBehavior(_ behavior: UICollisionBehavior,
+                         beganContactFor item1: UIDynamicItem,
+                         with item2: UIDynamicItem,
+                         at p: CGPoint) {
+    NotificationCenter.default.post(
+      name: .ItemDropped,
+      object: item1,
+      userInfo: [UserInfoAttributes.contactedWith: item2]
+    )
+    NotificationCenter.default.post(
+      name: .ItemDropped,
+      object: item2,
+      userInfo: [UserInfoAttributes.contactedWith: item1]
+    )
   }
   
-  func collisionBehavior(_ behavior: UICollisionBehavior, beganContactFor item: UIDynamicItem, withBoundaryIdentifier identifier: NSCopying?, at p: CGPoint) {
+  func collisionBehavior(_ behavior: UICollisionBehavior,
+                         beganContactFor item: UIDynamicItem,
+                         withBoundaryIdentifier identifier: NSCopying?,
+                         at p: CGPoint) {
     if p.y < 1.0 {
       // do nothing if touched upper border.
       return

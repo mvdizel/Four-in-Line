@@ -9,13 +9,15 @@
 import UIKit
 
 final class ChipView: UIView {
-
+  
   // MARK: - Public Instance Attributes
   let viewModel: ChipViewModel
-
+  
+  
   // MARK: - Private Instance Attributes
   private weak var imageView: UIImageView!
-
+  
+  
   // MARK: - Initializers
   init(viewModel: ChipViewModel) {
     self.viewModel = viewModel
@@ -27,6 +29,7 @@ final class ChipView: UIView {
     fatalError("unavailable")
   }
 }
+
 
 // MARK: - Private Instance Methods
 private extension ChipView {
