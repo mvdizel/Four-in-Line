@@ -22,10 +22,17 @@ extension UIView {
     }
     view.frame = bounds
     addSubview(view)
+    autolayoutSize(for: view)
+    return view
+  }
+  
+  /// Add constraints to fit the second view size.
+  ///
+  /// - Parameter view: A `UIView` to be layout.
+  func autolayoutSize(for view: UIView) {
     topAnchor.constraint(equalTo: view.topAnchor).isActive = true
     leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
     bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-    return view
   }
 }

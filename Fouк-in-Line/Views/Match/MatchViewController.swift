@@ -19,6 +19,13 @@ final class MatchViewController: BaseViewController {
   
   // MARK: - Private Instance Attributes
   let viewModel = MatchViewModel()
+  
+  
+  // MARK: - Lifecycle
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    setup()
+  }
 }
 
 
@@ -26,5 +33,13 @@ final class MatchViewController: BaseViewController {
 extension MatchViewController {
   @IBAction func buttonTapped(_ sender: Any) {
     gameBoardView.drop()
+  }
+}
+
+
+// MARK: - Private Instance Methods
+private extension MatchViewController {
+  func setup() {
+    gameBoardView.viewModel = viewModel
   }
 }

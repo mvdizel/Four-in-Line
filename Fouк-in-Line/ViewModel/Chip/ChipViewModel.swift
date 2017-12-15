@@ -11,14 +11,15 @@ import DynamicBinder
 
 /// A class for defining and implementing chip logic.
 final class ChipViewModel {
-
+  
   // MARK: - Public Instance Attributes
   let isTemp: DynamicBinder<Bool>
   var chipSize: DynamicBinderInterface<CGFloat> {
     return DynamicConstants.chipSize.interface
   }
   let position: ChipPosition
-
+  
+  
   // MARK: - Initializers
   init(positon: ChipPosition, isTemp: Bool) {
     self.position = positon
