@@ -42,8 +42,14 @@ import UIKit
   
   
   // MARK: - Public Instance Properties
-  weak var viewModel: MatchViewModel! { didSet { setup() }}
-  var chipSize: CGFloat { return DynamicConstants.chipSize.value }
+  weak var viewModel: MatchViewModel! {
+    didSet {
+      setup()
+    }
+  }
+  var chipSize: CGFloat {
+    return DynamicConstants.chipSize.value
+  }
   
   
   // MARK: - Private Instance Properties
@@ -53,6 +59,8 @@ import UIKit
   private var dropBehavior = DropBehavior()
   private var color: UIColor = .orange
   private weak var topView: UIView!
+  private weak var tempChipView: ChipView?
+  private var chipViews: [Weak<ChipView>] = []
   
   
   // MARK: - Initializers
@@ -60,7 +68,7 @@ import UIKit
     super.init(frame: frame)
     initializeView()
   }
-
+  
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
     initializeView()
@@ -112,21 +120,28 @@ extension GameBoardView {
 // MARK: - Private Instance Methods
 private extension GameBoardView {
   func drop(at column: Int) {
-    let frame = CGRect(x: CGFloat(column) * chipSize, y: 0.1, width: chipSize, height: chipSize)
-    let newView = UIView(frame: frame)
-    color = color == UIColor.brown ? UIColor.orange : UIColor.brown
+    color = color == .brown ? .orange : .brown
+    let position = ChipPosition(
+      column: column,
+      row: DynamicConstants.numberOfRows.value - 1,
+      player: color == .brown ? .phone : .human
+    )
+    let newView = ChipView(viewModel: ChipViewModel(
+      positon: position,
+      isTemp: false
+    ))
     newView.backgroundColor = color
     boardView.addSubview(newView)
     dropBehavior.add(newView)
   }
-
+  
   /// Initializes view from nib file.
   func initializeView() {
     topView = loadXibView()
     animator = UIDynamicAnimator(referenceView: boardView)
     animator.addBehavior(dropBehavior)
   }
-
+  
   /// Builds UI for current gameboard.
   func buildGameBoard() {
     guard let ratioConstraint = columnsToRowsAspectRatioConstraint,
@@ -142,44 +157,40 @@ private extension GameBoardView {
     boardView.setNeedsLayout()
     boardView.layoutIfNeeded()
   }
-
+  
   func setup() {
-//    viewModel.chipSize = chipSize
-//    viewModel.chipAdded.bind(with: self) { [weak self] (chipView) in
-//      guard let boardView = self?.boardView,
-//            let chipView = chipView else {
-//        return
-//      }
-//      boardView.addSubview(chipView)
-//      boardView.bringSubview(toFront: chipView)
-//    }
-//    viewModel.chipRemoved.bind(with: self) { (chipView) in
-//      guard let chipView = chipView else {
-//        return
-//      }
-//      chipView.removeFromSuperview()
-//    }
-//    viewModel.chipThrown.bind(with: self) { [weak self] (chipView) in
-//      guard let strongSelf = self,
-//            let chipView = chipView else {
-//        return
-//      }
-//      strongSelf.boardView.addSubview(chipView)
-//      strongSelf.boardView.bringSubview(toFront: chipView)
-//      strongSelf.dropBehavior.add(chipView)
-//    }
-//    viewModel.chipDropped.bind(with: self) { [weak self] (chipView) in
-//      guard let strongSelf = self,
-//            let chipView = chipView else {
-//        return
-//      }
-//      strongSelf.dropBehavior.remove(chipView)
-//    }
-//    viewModel.removeChips.bind(with: self) { [weak self] in
-//      guard let boardView = self?.boardView else {
-//        return
-//      }
-//      boardView.subviews.forEach({ $0.removeFromSuperview() })
-//    }
+    viewModel.chipAdded.bind(with: self) { [weak self] chipViewModel in
+      DispatchQueue.main.async {
+        guard let strongSelf = self,
+              let chipViewModel = chipViewModel else {
+          return
+        }
+        let chipView = ChipView(viewModel: chipViewModel)
+        strongSelf.chipViews.append(Weak(chipView))
+        strongSelf.boardView.insertSubview(chipView, at: 0)
+        strongSelf.dropBehavior.add(chipView)
+      }
+    }
+    viewModel.tempChip.bind(with: self) { [weak self] chipViewModel in
+      DispatchQueue.main.async {
+        self?.tempChipView?.removeFromSuperview()
+        guard let strongSelf = self,
+              let chipViewModel = chipViewModel else {
+          return
+        }
+        let chipView = ChipView(viewModel: chipViewModel)
+        strongSelf.tempChipView = chipView
+        strongSelf.boardView.insertSubview(chipView, at: 0)
+      }
+    }
+    viewModel.gameStarted.bind(with: self) { [weak self] in
+      DispatchQueue.main.async {
+        self?.tempChipView?.removeFromSuperview()
+        self?.chipViews.flatMap({ $0.value }).forEach { chipView in
+          self?.dropBehavior.remove(chipView)
+          chipView.removeFromSuperview()
+        }
+      }
+    }
   }
 }
