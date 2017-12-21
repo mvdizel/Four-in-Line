@@ -27,12 +27,12 @@ extension UIView {
   }
   
   /// Add constraints to fit the second view size.
-  ///
-  /// - Parameter view: A `UIView` to be layout.
-  func autolayoutSize(for view: UIView) {
-    topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-    leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-    bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-    trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+  func autolayoutSize(for view: UIView, inset: CGFloat = 0.0) {
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.topAnchor.constraint(equalTo: topAnchor, constant: inset).isActive = true
+    view.leadingAnchor.constraint(equalTo: leadingAnchor, constant: inset).isActive = true
+    view.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -inset).isActive = true
+    view.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -inset).isActive = true
+    view.setNeedsLayout()
   }
 }
