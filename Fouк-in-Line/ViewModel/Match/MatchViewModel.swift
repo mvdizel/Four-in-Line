@@ -28,6 +28,13 @@ final class MatchViewModel {
       return
     }
     chipAdded.value = ChipViewModel(positon: position, isTemp: false)
+    MatchManager.shared.makeMove(at: column) { [weak self] chipPosition in
+      guard let position = chipPosition else {
+        self?.chipAdded.value = nil
+        return
+      }
+      self?.chipAdded.value = ChipViewModel(positon: position, isTemp: false)
+    }
   }
   
   func updateTempChip(at column: Int?) {

@@ -11,10 +11,14 @@ import UIKit
 class DropBehavior: UIDynamicBehavior {
   
   // MARK: - Private Instance Properties
-  fileprivate weak var gravityBehavior: UIGravityBehavior!
-  fileprivate weak var collisionBehavior: UICollisionBehavior!
-  fileprivate weak var itemBehavior: UIDynamicItemBehavior!
-  
+  // @TODO: Make private
+//  private weak var gravityBehavior: UIGravityBehavior!
+//  private weak var collisionBehavior: UICollisionBehavior!
+//  private var itemBehaviors: [Weak<UIDynamicItemBehavior>] = []
+  weak var gravityBehavior: UIGravityBehavior!
+  weak var collisionBehavior: UICollisionBehavior!
+  var itemBehaviors: [Weak<UIDynamicItemBehavior>] = []
+
   
   // MARK: - Initialization
   override init() {
@@ -41,8 +45,15 @@ extension DropBehavior: UICollisionBehaviorDelegate {
       object: item2,
       userInfo: [UserInfoAttributes.contactedWith: item1]
     )
+    guard let chip1 = item1 as? ChipView,
+          let chip2 = item2 as? ChipView,
+          chip1.isSameColumn(as: chip2) else {
+      return
+    }
+    anchor(item1)
+    anchor(item2)
   }
-  
+
   func collisionBehavior(_ behavior: UICollisionBehavior,
                          beganContactFor item: UIDynamicItem,
                          withBoundaryIdentifier identifier: NSCopying?,
@@ -51,6 +62,7 @@ extension DropBehavior: UICollisionBehaviorDelegate {
       // do nothing if touched upper border.
       return
     }
+    anchor(item)
     NotificationCenter.default.post(name: .ItemDropped, object: item)
   }
   // swiftlint:enable identifier_name
@@ -59,16 +71,17 @@ extension DropBehavior: UICollisionBehaviorDelegate {
 
 // MARK: - Public Instance Methods
 extension DropBehavior {
-  func add(_ item: UIDynamicItem) {
-    gravityBehavior.addItem(item)
-    collisionBehavior.addItem(item)
-    itemBehavior.addItem(item)
+  func add(_ chip: ChipView) {
+    gravityBehavior.addItem(chip)
+    collisionBehavior.addItem(chip)
+    addItemBehavior(with: chip)
   }
   
-  func remove(_ item: UIDynamicItem) {
-    gravityBehavior.removeItem(item)
-    collisionBehavior.removeItem(item)
-    itemBehavior.removeItem(item)
+  func updateBoundaries(with frame: CGRect) {
+    collisionBehavior.removeAllBoundaries()
+    let porintFrom = CGPoint(x: 0, y: frame.height)
+    let porintTo = CGPoint(x: frame.width, y: frame.height)
+    collisionBehavior.addBoundary(withIdentifier: NSString(string: "bottom"), from: porintFrom, to: porintTo)
   }
 }
 
@@ -78,7 +91,6 @@ private extension DropBehavior {
   func setupBehaviors() {
     addGravityBehavior()
     addCollisionBehavior()
-    addItemBehavior()
   }
   
   func addGravityBehavior() {
@@ -86,7 +98,7 @@ private extension DropBehavior {
     addChildBehavior(behavior)
     gravityBehavior = behavior
     // @TODO: Play with magnitude
-    gravityBehavior.magnitude = 2
+    gravityBehavior.magnitude = 1.5
   }
   
   func addCollisionBehavior() {
@@ -95,12 +107,33 @@ private extension DropBehavior {
     collisionBehavior = behavior
     collisionBehavior.translatesReferenceBoundsIntoBoundary = true
     collisionBehavior.collisionDelegate = self
+    collisionBehavior.collisionMode = .everything
   }
   
-  func addItemBehavior() {
+  func addItemBehavior(with item: UIDynamicItem) {
     let behavior = UIDynamicItemBehavior()
     addChildBehavior(behavior)
-    itemBehavior = behavior
-    itemBehavior.allowsRotation = false
+    itemBehaviors.append(Weak(behavior))
+    behavior.allowsRotation = false
+    behavior.addItem(item)
+  }
+  
+  func anchor(_ item: UIDynamicItem) {
+    guard let chip = item as? ChipView else {
+      return
+    }
+    guard let itemBehavior = itemBehaviors.first(where: {
+      ($0.value?.items.first as? ChipView) == chip
+    })?.value, !itemBehavior.isAnchored else {
+      return
+    }
+    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
+      guard !itemBehavior.isAnchored else {
+        return
+      }
+      itemBehavior.isAnchored = true
+      chip.frame = chip.viewModel.position.frame
+      self?.dynamicAnimator?.updateItem(usingCurrentState: chip)
+    }
   }
 }
