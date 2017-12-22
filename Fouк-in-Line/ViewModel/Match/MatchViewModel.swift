@@ -15,6 +15,7 @@ final class MatchViewModel {
   let chipAdded = DynamicBinder<ChipViewModel?>(nil)
   let tempChip = DynamicBinder<ChipViewModel?>(nil)
   let gameStarted = DynamicBinder<Void>(())
+  let currentPlayer = DynamicBinder<Player>(.human)
   
   
   // MARK: - Private Instance Attributes
@@ -27,8 +28,10 @@ final class MatchViewModel {
       chipAdded.value = nil
       return
     }
+    currentPlayer.value = .phone
     chipAdded.value = ChipViewModel(positon: position, isTemp: false)
     MatchManager.shared.makeMove(at: column) { [weak self] chipPosition in
+      self?.currentPlayer.value = .human
       guard let position = chipPosition else {
         self?.chipAdded.value = nil
         return
@@ -47,6 +50,7 @@ final class MatchViewModel {
   }
   
   func newGame() {
+    currentPlayer.value = .human
     chipAdded.value = nil
     tempChip.value = nil
     gameStarted.fire()

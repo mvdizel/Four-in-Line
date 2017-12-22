@@ -14,30 +14,54 @@
             <connections>
                 <outlet property="boardView" destination="utU-rT-p8u" id="bcb-W2-IVV"/>
                 <outlet property="boardViewAspectRatioConstraint" destination="6Xa-cq-uP1" id="IAr-Ah-ipg"/>
+                <outlet property="firstPlayerImageView" destination="F2d-1L-s93" id="1kg-Lc-v53"/>
+                <outlet property="secondPlayerImageView" destination="UpC-0F-y2z" id="rtK-fg-uNI"/>
+                <outlet property="secondPlayerSpinner" destination="tw8-js-LA0" id="2rT-Sv-HTh"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="615" height="557"/>
+            <rect key="frame" x="0.0" y="0.0" width="376" height="340"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="utU-rT-p8u">
-                    <rect key="frame" x="16" y="133" width="583" height="291.5"/>
+                    <rect key="frame" x="16" y="108" width="344" height="172"/>
                     <color key="backgroundColor" red="1" green="0.94976388567737369" blue="0.7111444785692973" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="utU-rT-p8u" secondAttribute="height" multiplier="2:1" id="6Xa-cq-uP1"/>
                     </constraints>
                 </view>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chip-blue" translatesAutoresizingMaskIntoConstraints="NO" id="F2d-1L-s93">
+                    <rect key="frame" x="16" y="42" width="50" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="NPx-Vu-x9x"/>
+                        <constraint firstAttribute="width" secondItem="F2d-1L-s93" secondAttribute="height" multiplier="1:1" id="kQb-BF-8ur"/>
+                    </constraints>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chip-red" translatesAutoresizingMaskIntoConstraints="NO" id="UpC-0F-y2z">
+                    <rect key="frame" x="310" y="42" width="50" height="50"/>
+                </imageView>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="tw8-js-LA0">
+                    <rect key="frame" x="325" y="57" width="20" height="20"/>
+                </activityIndicatorView>
             </subviews>
             <color key="backgroundColor" red="0.70120515938510619" green="0.74488420050761417" blue="0.73618595527805453" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <gestureRecognizers/>
             <constraints>
-                <constraint firstItem="utU-rT-p8u" firstAttribute="top" relation="greaterThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="top" constant="16" id="8nc-ea-SeE"/>
-                <constraint firstItem="utU-rT-p8u" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="KGj-VB-LQ4"/>
-                <constraint firstItem="utU-rT-p8u" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" priority="750" id="MHF-25-KhB"/>
+                <constraint firstItem="UpC-0F-y2z" firstAttribute="trailing" secondItem="utU-rT-p8u" secondAttribute="trailing" id="138-Pd-0m0"/>
+                <constraint firstItem="tw8-js-LA0" firstAttribute="centerY" secondItem="UpC-0F-y2z" secondAttribute="centerY" id="7hL-76-mwt"/>
+                <constraint firstItem="F2d-1L-s93" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" priority="750" id="8V3-AR-JK0"/>
+                <constraint firstItem="UpC-0F-y2z" firstAttribute="width" secondItem="F2d-1L-s93" secondAttribute="width" id="D5u-zn-3ll"/>
+                <constraint firstItem="utU-rT-p8u" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="24" id="KGj-VB-LQ4"/>
+                <constraint firstItem="UpC-0F-y2z" firstAttribute="height" secondItem="F2d-1L-s93" secondAttribute="height" id="Lbl-Xu-Yep"/>
                 <constraint firstItem="utU-rT-p8u" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="MLg-l6-MxM"/>
+                <constraint firstItem="tw8-js-LA0" firstAttribute="centerX" secondItem="UpC-0F-y2z" secondAttribute="centerX" id="Qzt-HY-Iuc"/>
                 <constraint firstItem="utU-rT-p8u" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" priority="750" id="WoX-fI-bdI"/>
+                <constraint firstItem="UpC-0F-y2z" firstAttribute="top" secondItem="F2d-1L-s93" secondAttribute="top" id="aCG-Pv-XIi"/>
+                <constraint firstItem="utU-rT-p8u" firstAttribute="top" secondItem="F2d-1L-s93" secondAttribute="bottom" constant="16" id="far-qn-nxZ"/>
                 <constraint firstItem="utU-rT-p8u" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="jMY-Xt-SUo"/>
+                <constraint firstItem="F2d-1L-s93" firstAttribute="leading" secondItem="utU-rT-p8u" secondAttribute="leading" id="r7q-NG-X4c"/>
+                <constraint firstItem="F2d-1L-s93" firstAttribute="top" relation="greaterThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="top" constant="16" id="trH-dG-FE8"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>
@@ -46,7 +70,7 @@
             <connections>
                 <outletCollection property="gestureRecognizers" destination="FdF-nT-x8B" appends="YES" id="HTh-O6-tK4"/>
             </connections>
-            <point key="canvasLocation" x="153.5" y="-0.5"/>
+            <point key="canvasLocation" x="34" y="-109"/>
         </view>
         <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.001" id="FdF-nT-x8B">
             <connections>
@@ -54,4 +78,8 @@
             </connections>
         </pongPressGestureRecognizer>
     </objects>
+    <resources>
+        <image name="chip-blue" width="42" height="42"/>
+        <image name="chip-red" width="42" height="42"/>
+    </resources>
 </document>

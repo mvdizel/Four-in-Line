@@ -18,6 +18,9 @@ import UIKit
       buildGameBoard()
     }
   }
+  @IBOutlet private weak var firstPlayerImageView: UIImageView!
+  @IBOutlet private weak var secondPlayerImageView: UIImageView!
+  @IBOutlet private weak var secondPlayerSpinner: UIActivityIndicatorView!
   
   
   // MARK: - @IBInspectables
@@ -80,14 +83,7 @@ import UIKit
     super.draw(rect)
     let chipSize = boardView.bounds.width / CGFloat(numOfColumns)
     DynamicConstants.chipSize.value = chipSize
-    print(boardView.frame)
-    print(self.frame)
     dropBehavior.updateBoundaries(with: boardView.frame)
-    print(dropBehavior.collisionBehavior.boundaryIdentifiers)
-//    animator.removeAllBehaviors()
-    animator = UIDynamicAnimator(referenceView: boardView)
-    animator.addBehavior(dropBehavior)
-    print(animator.behaviors)
   }
 }
 
@@ -131,10 +127,8 @@ private extension GameBoardView {
   /// Initializes view from nib file.
   func initializeView() {
     topView = loadXibView()
-    print(boardView.frame)
-    print(self.frame)
-//    animator = UIDynamicAnimator(referenceView: boardView)
-//    animator.addBehavior(dropBehavior)
+    animator = UIDynamicAnimator(referenceView: boardView)
+    animator.addBehavior(dropBehavior)
   }
   
   /// Builds UI for current gameboard.
@@ -153,51 +147,77 @@ private extension GameBoardView {
     boardView.layoutIfNeeded()
   }
   
+  /// Setups view model
   func setup() {
     viewModel.chipAdded.bind(with: self) { [weak self] chipViewModel in
       DispatchQueue.main.async {
-        guard let strongSelf = self,
-              let chipViewModel = chipViewModel else {
-          return
-        }
-        let chipView = ChipView(viewModel: chipViewModel)
-        var frame = chipViewModel.position.frame
-        frame.origin.y = 0.0
-        chipView.frame = frame
-        strongSelf.chipViews.append(Weak(chipView))
-        strongSelf.boardView.insertSubview(chipView, at: 0)
-        strongSelf.dropBehavior.add(chipView)
+        self?.process(new: chipViewModel)
       }
     }
     viewModel.tempChip.bind(with: self) { [weak self] chipViewModel in
       DispatchQueue.main.async {
-        self?.tempChipView?.removeFromSuperview()
-        guard let strongSelf = self,
-              let chipViewModel = chipViewModel else {
-          return
-        }
-        let chipView = ChipView(viewModel: chipViewModel)
-        var frame = chipViewModel.position.frame
-        frame.origin.y = 0.0
-        chipView.frame = frame
-        strongSelf.tempChipView = chipView
-        strongSelf.boardView.insertSubview(chipView, at: 0)
+        self?.process(temp: chipViewModel)
       }
     }
     viewModel.gameStarted.bind(with: self) { [weak self] in
       DispatchQueue.main.async {
-        guard let strongSelf = self else {
-          return
-        }
-        strongSelf.tempChipView?.removeFromSuperview()
-        strongSelf.chipViews.flatMap({ $0.value }).forEach { chipView in
-          chipView.removeFromSuperview()
-        }
-        let dropBehavior = DropBehavior()
-        strongSelf.animator.removeAllBehaviors()
-        strongSelf.animator.addBehavior(dropBehavior)
-        strongSelf.dropBehavior = dropBehavior
+        self?.startNewGame()
       }
     }
+    viewModel.currentPlayer.bindAndFire(with: self) { [weak self] currentPlayer in
+      DispatchQueue.main.async {
+        self?.process(currentPlayer)
+      }
+    }
+  }
+  
+  func process(new chipViewModel: ChipViewModel?) {
+    guard let chipViewModel = chipViewModel else {
+      return
+    }
+    let chipView = ChipView(viewModel: chipViewModel)
+    var frame = chipViewModel.position.frame
+    frame.origin.y = 0.0
+    chipView.frame = frame
+    chipViews.append(Weak(chipView))
+    boardView.insertSubview(chipView, at: 0)
+    dropBehavior.add(chipView)
+  }
+  
+  func process(temp chipViewModel: ChipViewModel?) {
+    tempChipView?.removeFromSuperview()
+    guard let chipViewModel = chipViewModel else {
+      return
+    }
+    let chipView = ChipView(viewModel: chipViewModel)
+    var frame = chipViewModel.position.frame
+    frame.origin.y = 0.0
+    chipView.frame = frame
+    tempChipView = chipView
+    boardView.insertSubview(chipView, at: 0)
+  }
+  
+  func process(_ currentPlayer: Player) {
+    let isFirst = currentPlayer == .human
+    firstPlayerImageView.alpha = isFirst ? 1.0 : 0.4
+    secondPlayerImageView.alpha = isFirst ? 0.4 : 1.0
+    isUserInteractionEnabled = isFirst
+    if isFirst {
+      secondPlayerSpinner.stopAnimating()
+    } else {
+      secondPlayerSpinner.startAnimating()
+    }
+  }
+  
+  func startNewGame() {
+    tempChipView?.removeFromSuperview()
+    chipViews.flatMap({ $0.value }).forEach { chipView in
+      chipView.removeFromSuperview()
+    }
+    let dropBehavior = DropBehavior()
+    dropBehavior.updateBoundaries(with: boardView.frame)
+    animator.removeAllBehaviors()
+    animator.addBehavior(dropBehavior)
+    self.dropBehavior = dropBehavior
   }
 }

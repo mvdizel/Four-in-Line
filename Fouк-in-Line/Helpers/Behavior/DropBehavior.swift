@@ -11,13 +11,9 @@ import UIKit
 class DropBehavior: UIDynamicBehavior {
   
   // MARK: - Private Instance Properties
-  // @TODO: Make private
-//  private weak var gravityBehavior: UIGravityBehavior!
-//  private weak var collisionBehavior: UICollisionBehavior!
-//  private var itemBehaviors: [Weak<UIDynamicItemBehavior>] = []
-  weak var gravityBehavior: UIGravityBehavior!
-  weak var collisionBehavior: UICollisionBehavior!
-  var itemBehaviors: [Weak<UIDynamicItemBehavior>] = []
+  private weak var gravityBehavior: UIGravityBehavior!
+  private weak var collisionBehavior: UICollisionBehavior!
+  private var itemBehaviors: [Weak<UIDynamicItemBehavior>] = []
 
   
   // MARK: - Initialization
@@ -81,7 +77,11 @@ extension DropBehavior {
     collisionBehavior.removeAllBoundaries()
     let porintFrom = CGPoint(x: 0, y: frame.height)
     let porintTo = CGPoint(x: frame.width, y: frame.height)
-    collisionBehavior.addBoundary(withIdentifier: NSString(string: "bottom"), from: porintFrom, to: porintTo)
+    collisionBehavior.addBoundary(
+      withIdentifier: NSString(string: "bottom"),
+      from: porintFrom,
+      to: porintTo
+    )
   }
 }
 
@@ -135,5 +135,17 @@ private extension DropBehavior {
       chip.frame = chip.viewModel.position.frame
       self?.dynamicAnimator?.updateItem(usingCurrentState: chip)
     }
+  }
+  
+  func isItemAnchored(_ item: UIDynamicItem) -> Bool {
+    guard let chip = item as? ChipView else {
+      return false
+    }
+    guard let itemBehavior = itemBehaviors.first(where: {
+      ($0.value?.items.first as? ChipView) == chip
+    })?.value else {
+      return false
+    }
+    return itemBehavior.isAnchored
   }
 }
