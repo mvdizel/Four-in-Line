@@ -8,10 +8,10 @@
 
 import Foundation
 
-final class GameAITests: BaseTest {
+final class GameAITests: BaseTests {
   
   // MARK: - Functional tests.
   func testBestMove() {
-    
+//    let gameBoard = GameBoard.init()
   }
 }

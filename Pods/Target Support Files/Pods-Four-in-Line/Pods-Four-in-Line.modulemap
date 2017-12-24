@@ -1,6 +1,0 @@
-framework module Pods_Four_in_Line {
-  umbrella header "Pods-Four-in-Line-umbrella.h"
-
-  export *
-  module * { export * }
-}
