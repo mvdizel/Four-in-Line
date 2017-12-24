@@ -14,6 +14,8 @@
 		4D578DBC1FCF62260001AE32 /* GameBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D578DBB1FCF62260001AE32 /* GameBoard.swift */; };
 		4D578DC01FCF67E60001AE32 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D578DBF1FCF67E60001AE32 /* Player.swift */; };
 		4D578DC21FCF67EF0001AE32 /* Difficulty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D578DC11FCF67EF0001AE32 /* Difficulty.swift */; };
+		4D59E0481FEF4BEE00D5E625 /* UnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D59E0471FEF4BEE00D5E625 /* UnitTests.swift */; };
+		4D59E0511FEF4C7F00D5E625 /* GameAITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D59E0501FEF4C7F00D5E625 /* GameAITests.swift */; };
 		4D8BD1411FD741E7009A4452 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8BD1401FD741E7009A4452 /* Constants.swift */; };
 		4DA60F001F97D91A00AD09E9 /* DynamicConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA60EFF1F97D91A00AD09E9 /* DynamicConstants.swift */; };
 		4DA60F031F97E94100AD09E9 /* ChipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA60F021F97E94100AD09E9 /* ChipView.swift */; };
@@ -53,6 +55,16 @@
 		FDFF69D21B9CE5B6001697D4 /* GameAI.m in Sources */ = {isa = PBXBuildFile; fileRef = FDFF69D11B9CE5B6001697D4 /* GameAI.m */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		4D59E04A1FEF4BEE00D5E625 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FD53B8661B9B486D006B7D1A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FD53B86D1B9B486D006B7D1A;
+			remoteInfo = "Four-in-Line";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		1AF9CAE54892F8081A96E517 /* Pods-Four-in-Line.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Four-in-Line.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Four-in-Line/Pods-Four-in-Line.debug.xcconfig"; sourceTree = "<group>"; };
 		3258FC85BA8FD380696FF78C /* Pods-Four-in-Line.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Four-in-Line.release.xcconfig"; path = "Pods/Target Support Files/Pods-Four-in-Line/Pods-Four-in-Line.release.xcconfig"; sourceTree = "<group>"; };
@@ -65,6 +77,10 @@
 		4D578DBB1FCF62260001AE32 /* GameBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoard.swift; sourceTree = "<group>"; };
 		4D578DBF1FCF67E60001AE32 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		4D578DC11FCF67EF0001AE32 /* Difficulty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Difficulty.swift; sourceTree = "<group>"; };
+		4D59E0451FEF4BEE00D5E625 /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D59E0471FEF4BEE00D5E625 /* UnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitTests.swift; sourceTree = "<group>"; };
+		4D59E0491FEF4BEE00D5E625 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4D59E0501FEF4C7F00D5E625 /* GameAITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameAITests.swift; sourceTree = "<group>"; };
 		4D8BD1401FD741E7009A4452 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		4DA60EFF1F97D91A00AD09E9 /* DynamicConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicConstants.swift; sourceTree = "<group>"; };
 		4DA60F021F97E94100AD09E9 /* ChipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipView.swift; sourceTree = "<group>"; };
@@ -116,6 +132,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4D59E0421FEF4BEE00D5E625 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FD53B86B1B9B486D006B7D1A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -157,6 +180,24 @@
 				4D520C561E8C5A3D00848FCE /* MatchManager.swift */,
 			);
 			path = Match;
+			sourceTree = "<group>";
+		};
+		4D59E0461FEF4BEE00D5E625 /* UnitTests */ = {
+			isa = PBXGroup;
+			children = (
+				4D59E04F1FEF4C6600D5E625 /* Model */,
+				4D59E0471FEF4BEE00D5E625 /* UnitTests.swift */,
+				4D59E0491FEF4BEE00D5E625 /* Info.plist */,
+			);
+			path = UnitTests;
+			sourceTree = "<group>";
+		};
+		4D59E04F1FEF4C6600D5E625 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4D59E0501FEF4C7F00D5E625 /* GameAITests.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		4DA60F011F97E91000AD09E9 /* Chip */ = {
@@ -259,6 +300,7 @@
 			isa = PBXGroup;
 			children = (
 				FD53B8701B9B486D006B7D1A /* Four-in-Line */,
+				4D59E0461FEF4BEE00D5E625 /* UnitTests */,
 				FD53B86F1B9B486D006B7D1A /* Products */,
 				383A44813C1F14A3A233C5DB /* Pods */,
 				65DF40E959C987AE436953E1 /* Frameworks */,
@@ -269,6 +311,7 @@
 			isa = PBXGroup;
 			children = (
 				FD53B86E1B9B486D006B7D1A /* Four-in-Line.app */,
+				4D59E0451FEF4BEE00D5E625 /* UnitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -348,6 +391,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		4D59E0441FEF4BEE00D5E625 /* UnitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4D59E04E1FEF4BEE00D5E625 /* Build configuration list for PBXNativeTarget "UnitTests" */;
+			buildPhases = (
+				4D59E0411FEF4BEE00D5E625 /* Sources */,
+				4D59E0421FEF4BEE00D5E625 /* Frameworks */,
+				4D59E0431FEF4BEE00D5E625 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4D59E04B1FEF4BEE00D5E625 /* PBXTargetDependency */,
+			);
+			name = UnitTests;
+			productName = UnitTests;
+			productReference = 4D59E0451FEF4BEE00D5E625 /* UnitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		FD53B86D1B9B486D006B7D1A /* Four-in-Line */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = FD53B8911B9B486D006B7D1A /* Build configuration list for PBXNativeTarget "Four-in-Line" */;
@@ -375,9 +436,15 @@
 		FD53B8661B9B486D006B7D1A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0920;
 				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "Vasilii Muravev";
 				TargetAttributes = {
+					4D59E0441FEF4BEE00D5E625 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = FD53B86D1B9B486D006B7D1A;
+					};
 					FD53B86D1B9B486D006B7D1A = {
 						CreatedOnToolsVersion = 6.4;
 						DevelopmentTeam = S6UEECG2X9;
@@ -399,11 +466,19 @@
 			projectRoot = "";
 			targets = (
 				FD53B86D1B9B486D006B7D1A /* Four-in-Line */,
+				4D59E0441FEF4BEE00D5E625 /* UnitTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		4D59E0431FEF4BEE00D5E625 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FD53B86C1B9B486D006B7D1A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -486,6 +561,15 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4D59E0411FEF4BEE00D5E625 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D59E0481FEF4BEE00D5E625 /* UnitTests.swift in Sources */,
+				4D59E0511FEF4C7F00D5E625 /* GameAITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FD53B86A1B9B486D006B7D1A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -534,6 +618,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		4D59E04B1FEF4BEE00D5E625 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FD53B86D1B9B486D006B7D1A /* Four-in-Line */;
+			targetProxy = 4D59E04A1FEF4BEE00D5E625 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		FD53B87B1B9B486D006B7D1A /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -554,6 +646,57 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		4D59E04C1FEF4BEE00D5E625 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = UnitTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.vasiliimuravev.UnitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Four-in-Line.app/Four-in-Line";
+			};
+			name = Debug;
+		};
+		4D59E04D1FEF4BEE00D5E625 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = UnitTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.vasiliimuravev.UnitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Four-in-Line.app/Four-in-Line";
+			};
+			name = Release;
+		};
 		FD53B88F1B9B486D006B7D1A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -698,6 +841,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4D59E04E1FEF4BEE00D5E625 /* Build configuration list for PBXNativeTarget "UnitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4D59E04C1FEF4BEE00D5E625 /* Debug */,
+				4D59E04D1FEF4BEE00D5E625 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		FD53B8691B9B486D006B7D1A /* Build configuration list for PBXProject "Four-in-Line" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
