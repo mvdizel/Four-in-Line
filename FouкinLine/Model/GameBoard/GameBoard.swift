@@ -29,8 +29,8 @@ extension GameBoard {
   
   /// Cleans cells.
   func cleanCells() {
-    rows = DynamicConstants.numberOfRows.value
-    columns = DynamicConstants.numberOfColumns.value
+    rows = DynamicConstants.GameBoard.numberOfRows.value
+    columns = DynamicConstants.GameBoard.numberOfColumns.value
     cells = Array(repeating: Array(repeating: nil, count: rows), count: columns)
   }
   

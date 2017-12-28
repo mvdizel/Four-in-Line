@@ -46,7 +46,7 @@ private extension ChipView {
     self.imageView = imageView
     addSubview(imageView)
     autolayoutSize(for: imageView, inset: 2)
-    imageView.image = viewModel.position.player?.image()
+    imageView.image = viewModel.image
     imageView.contentMode = .scaleAspectFit
     viewModel.isTemp.bindAndFire(with: self) { [weak self] isTemp in
       self?.alpha = isTemp ? 0.5 : 1.0

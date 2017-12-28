@@ -14,15 +14,21 @@ final class ChipViewModel {
   
   // MARK: - Public Instance Attributes
   let isTemp: DynamicBinder<Bool>
-  var chipSize: DynamicBinderInterface<CGFloat> {
-    return DynamicConstants.chipSize.interface
+  var position: ChipPosition {
+    return chip.position
   }
-  let position: ChipPosition
+  var image: UIImage {
+    return chip.image
+  }
+  
+  
+  // MARK: - Private Instance Attributes
+  let chip: Chip
   
   
   // MARK: - Initializers
-  init(positon: ChipPosition, isTemp: Bool) {
-    self.position = positon
+  init(chip: Chip, isTemp: Bool) {
+    self.chip = chip
     self.isTemp = DynamicBinder(isTemp)
   }
 }

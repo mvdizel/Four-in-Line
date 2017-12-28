@@ -15,12 +15,11 @@ struct ChipPosition {
   // MARK: - Public Struct Attributes
   var column: Int
   var row: Int
-  var player: Player?
 
   /// Invert row position, because of in the UIView zero position
   /// starts from the top left corner.
   var rowInView: Int {
-    return DynamicConstants.numberOfRows.value - row - 1
+    return DynamicConstants.GameBoard.numberOfRows.value - row - 1
   }
 
   /// Converts ChipPosition into IndexPath.
@@ -35,7 +34,7 @@ struct ChipPosition {
 
   /// Returns chip position in view, depends on chip and board size.
   var frame: CGRect {
-    let chipSize = DynamicConstants.chipSize.value
+    let chipSize = DynamicConstants.Chip.size.value
     return CGRect(
       x: CGFloat(column) * chipSize,
       y: CGFloat(rowInView) * chipSize,

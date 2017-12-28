@@ -47,7 +47,7 @@ extension MatchManager {
           let firstEmpty = rows.index(where: { $0 == nil }) else {
       return nil
     }
-    return ChipPosition(column: column, row: firstEmpty, player: .human)
+    return ChipPosition(column: column, row: firstEmpty)
   }
 
   /// Makes move in selected column index, if possible.

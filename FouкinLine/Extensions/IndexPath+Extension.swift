@@ -13,11 +13,9 @@ extension IndexPath {
 
   /// Converts IndexPath into ChipPosition.
   var chipPosition: ChipPosition {
-    let position = ChipPosition(
-      column: Swift.max(section, 0),
-      row: Swift.max(row, 0),
-      player: nil
-    )
+    let column = Swift.max(self.section, 0)
+    let row = Swift.max(self.row, 0)
+    let position = ChipPosition(column: column, row: row)
     return position
   }
 }

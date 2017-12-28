@@ -8,9 +8,6 @@
 
 import Foundation
 
-private let winScore: Float = 10.0
-private let maxDepth: Int = 3
-
 /// A singleton, defining Artificial Intelligence of game.
 final class GameAI {
   
@@ -19,14 +16,29 @@ final class GameAI {
   
   
   // MARK: - Private Instance Attributes
-  var cells: [[Int]] = []
-  var madeMoves: [Int] = []
-  var bestColumn: Int!
-  
+  private var cells: [[Int]] = []
+  private var madeMoves: [Int] = []
+  private var bestColumn: Int?
+  private var positionCoefficients: [Float] = []
+  private var depthCoefficients: [Float] = []
+  private var winScore: Float {
+    return DynamicConstants.GameAI.winScore.value
+  }
+  private var maxDepth: Int {
+    return DynamicConstants.GameAI.maxDepth.value
+  }
+
   
   // MARK: - Initializers
   private init() {
     setup()
+  }
+
+  
+  // MARK: - De-Initializers
+  deinit {
+    DynamicConstants.GameBoard.numberOfColumns.unbind(self)
+    DynamicConstants.GameAI.maxDepth.unbind(self)
   }
 }
 
@@ -71,10 +83,13 @@ extension GameAI {
       iteration: &iteration,
       depth: &depth
     )
+    guard let bestColumn = bestColumn else {
+      completion(nil)
+      return
+    }
     let position = ChipPosition(
       column: bestColumn,
-      row: madeMoves[bestColumn],
-      player: .phone
+      row: madeMoves[bestColumn]
     )
     completion(position)
   }
@@ -85,6 +100,12 @@ extension GameAI {
 private extension GameAI {
   
   func setup() {
+    DynamicConstants.GameBoard.numberOfColumns.bindAndFire(with: self) { [weak self] _ in
+      self?.calculateCoefficients()
+    }
+    DynamicConstants.GameAI.maxDepth.bind(with: self) { [weak self] _ in
+      self?.calculateCoefficients()
+    }
   }
   
   /// Searches for the first available move on the gameboard.
@@ -96,39 +117,53 @@ private extension GameAI {
       guard let row = $1.index(where: { $0 == nil}) else {
         return nil
       }
-      return ChipPosition(column: $0, row: row, player: .phone)
+      return ChipPosition(column: $0, row: row)
     }
     return positions.first
   }
   
-  func minimax(for player: Player, alpha: Float, beta: Float, iteration: inout Int, depth: inout Int) -> Float {
+  func minimax(for player: Player,
+               alpha: Float,
+               beta: Float,
+               iteration: inout Int,
+               depth: inout Int) -> Float {
     var alpha = alpha
     depth += 1
+    iteration += 1
     defer {
       depth -= 1
     }
     // @TODO: Check if winner found on current move.
     // @TODO: Update score with current depth.
     // @TODO: Check for forks.
-    iteration += 1
-    for column in 0..<DynamicConstants.numberOfColumns.value-1 {
+    for column in 0..<DynamicConstants.GameBoard.numberOfColumns.value {
       let row = madeMoves[column]
-      guard row < DynamicConstants.numberOfRows.value else {
+      guard row < DynamicConstants.GameBoard.numberOfRows.value else {
         continue
       }
       cells[column][row] = player.rawValue
       cells[column][row + 1] = 2
       madeMoves[column] += 1
-      var score = positionScore(for: player)
-      if score < winScore, depth < maxDepth {
-        score = minimax(
+      var score = positionScore(for: player, column: column, row: row)
+      score *= 1.0 - depthCoefficients[depth]
+      if score <= winScore - 1.0, depth < maxDepth {
+        let futureScore = minimax(
           for: player.next(),
-          alpha: -beta,
+          alpha: -score,
           beta: -alpha,
           iteration: &iteration,
           depth: &depth
         )
+//        if futureScore == Float.infinity {
+//          score *= 1.0 - depthCoefficients[depth]
+//        } else {
+//          score = futureScore
+//        }
+        score = futureScore
+      } else {
+        print("wow wow wow")
       }
+      score *= 1.0 - positionCoefficients[column]
       cells[column][row] = 2
       cells[column][row + 1] = 3
       madeMoves[column] -= 1
@@ -138,14 +173,67 @@ private extension GameAI {
           bestColumn = column
         }
       }
-      if alpha >= beta {
+      guard alpha <= beta else {
         break
       }
     }
     return -alpha
   }
   
-  func positionScore(for player: Player) -> Float {
-    return 10.0
+  func positionScore(for player: Player, column: Int, row: Int) -> Float {
+    if (cells[0][0] == player.rawValue &&
+        cells[0][1] == player.rawValue &&
+        cells[0][2] == player.rawValue) ||
+      (cells[1][0] == player.rawValue &&
+       cells[1][1] == player.rawValue &&
+       cells[1][2] == player.rawValue) ||
+      (cells[2][0] == player.rawValue &&
+       cells[2][1] == player.rawValue &&
+       cells[2][2] == player.rawValue) ||
+      (cells[0][0] == player.rawValue &&
+       cells[1][0] == player.rawValue &&
+       cells[2][0] == player.rawValue) ||
+      (cells[0][1] == player.rawValue &&
+       cells[1][1] == player.rawValue &&
+       cells[2][1] == player.rawValue) ||
+      (cells[0][2] == player.rawValue &&
+       cells[1][2] == player.rawValue &&
+        cells[2][2] == player.rawValue) ||
+      (cells[0][0] == player.rawValue &&
+       cells[1][1] == player.rawValue &&
+       cells[2][2] == player.rawValue) ||
+      (cells[0][2] == player.rawValue &&
+       cells[1][1] == player.rawValue &&
+        cells[2][0] == player.rawValue) {
+      return winScore
+    }
+    return winScore - 1.0
+//    // @TODO: Check real score
+//    let score = winScore - 1.0
+//    // @TODO: Use coefficients dependent on player or not?
+////    score *= 1.0 - (player == .phone ? 1.0 : -1.0) * positionCoefficients[column]
+////    score *= 1.0 - (player == .phone ? 1.0 : -1.0) * depthCoefficients[depth]
+//    return score
+  }
+  
+  func cellType(column: Int, row: Int) -> Int {
+    guard cells.count > column, cells[column].count > row else {
+      return 3
+    }
+    return cells[column][row]
+  }
+  
+  func calculateCoefficients() {
+    positionCoefficients.removeAll()
+    let center = 0.5 + Float(DynamicConstants.GameBoard.numberOfColumns.value) / 2.0
+    for column in 1...DynamicConstants.GameBoard.numberOfColumns.value {
+      let coefficient = abs(Float(column) - center) / (center * 1000)
+      positionCoefficients.append(coefficient)
+    }
+    depthCoefficients.removeAll()
+    for depth in 0...maxDepth {
+      let coefficient = Float(depth) / (Float(maxDepth) * 1000)
+      depthCoefficients.append(coefficient)
+    }
   }
 }

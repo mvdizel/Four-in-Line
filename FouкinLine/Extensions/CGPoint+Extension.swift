@@ -13,11 +13,9 @@ extension CGPoint {
   
   /// Converts CGPoint into ChipPosition.
   var chipPosition: ChipPosition {
-    let position = ChipPosition(
-      column: Int(Swift.max(x, 0)),
-      row: Int(Swift.max(y, 0)),
-      player: nil
-    )
+    let column = Int(Swift.max(x, 0))
+    let row = Int(Swift.max(y, 0))
+    let position = ChipPosition(column: column, row: row)
     return position
   }
 }

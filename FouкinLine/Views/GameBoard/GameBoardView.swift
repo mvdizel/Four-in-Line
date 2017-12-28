@@ -51,7 +51,7 @@ import UIKit
     }
   }
   var chipSize: CGFloat {
-    return DynamicConstants.chipSize.value
+    return DynamicConstants.Chip.size.value
   }
   
   
@@ -82,7 +82,7 @@ import UIKit
   override func draw(_ rect: CGRect) {
     super.draw(rect)
     let chipSize = boardView.bounds.width / CGFloat(numOfColumns)
-    DynamicConstants.chipSize.value = chipSize
+    DynamicConstants.Chip.size.value = chipSize
     dropBehavior.updateBoundaries(with: boardView.frame)
   }
 }

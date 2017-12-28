@@ -28,15 +28,20 @@ final class MatchViewModel {
       chipAdded.value = nil
       return
     }
+    let chip = Chip(for: .human, at: position)
+    chipAdded.value = ChipViewModel(chip: chip, isTemp: false)
     currentPlayer.value = .phone
-    chipAdded.value = ChipViewModel(positon: position, isTemp: false)
     MatchManager.shared.makeMove(at: column) { [weak self] chipPosition in
-      self?.currentPlayer.value = .human
-      guard let position = chipPosition else {
-        self?.chipAdded.value = nil
+      guard let strongSelf = self else {
         return
       }
-      self?.chipAdded.value = ChipViewModel(positon: position, isTemp: false)
+      strongSelf.currentPlayer.value = .human
+      guard let position = chipPosition else {
+        strongSelf.chipAdded.value = nil
+        return
+      }
+      let chip = Chip(for: .phone, at: position)
+      strongSelf.chipAdded.value = ChipViewModel(chip: chip, isTemp: false)
     }
   }
   
@@ -46,7 +51,8 @@ final class MatchViewModel {
       tempChip.value = nil
       return
     }
-    tempChip.value = ChipViewModel(positon: position, isTemp: true)
+    let chip = Chip(for: .human, at: position)
+    tempChip.value = ChipViewModel(chip: chip, isTemp: true)
   }
   
   func newGame() {
