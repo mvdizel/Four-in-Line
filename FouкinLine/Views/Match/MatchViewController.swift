@@ -41,5 +41,11 @@ extension MatchViewController {
 private extension MatchViewController {
   func setup() {
     gameBoardView.viewModel = viewModel
+    DynamicConstants.GameBoard.numberOfColumns.bindAndFire(with: self) { [weak self] numOfColumns in
+      self?.gameBoardView.numOfColumns = numOfColumns
+    }
+    DynamicConstants.GameBoard.numberOfRows.bindAndFire(with: self) { [weak self] numOfRows in
+      self?.gameBoardView.numOfRows = numOfRows
+    }
   }
 }

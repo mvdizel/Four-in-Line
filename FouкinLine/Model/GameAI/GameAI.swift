@@ -127,7 +127,7 @@ private extension GameAI {
                beta: Float,
                iteration: inout Int,
                depth: inout Int) -> Float {
-    var alpha = alpha
+    var newAlpha = alpha
     depth += 1
     iteration += 1
     defer {
@@ -141,79 +141,90 @@ private extension GameAI {
       guard row < DynamicConstants.GameBoard.numberOfRows.value else {
         continue
       }
-      cells[column][row] = player.rawValue
-      cells[column][row + 1] = 2
-      madeMoves[column] += 1
+      makeFakeMove(player: player.rawValue, column, row)
       var score = positionScore(for: player, column: column, row: row)
-      score *= 1.0 - depthCoefficients[depth]
+//      score *= depthCoefficients[depth]
       if score <= winScore - 1.0, depth < maxDepth {
         let futureScore = minimax(
           for: player.next(),
-          alpha: -score,
+          alpha: -beta,
           beta: -alpha,
           iteration: &iteration,
           depth: &depth
         )
-//        if futureScore == Float.infinity {
-//          score *= 1.0 - depthCoefficients[depth]
-//        } else {
-//          score = futureScore
-//        }
-        score = futureScore
-      } else {
-        print("wow wow wow")
+        if futureScore != Float.infinity {
+          score = futureScore
+        }
       }
-      score *= 1.0 - positionCoefficients[column]
-      cells[column][row] = 2
-      cells[column][row + 1] = 3
-      madeMoves[column] -= 1
-      if score > alpha {
-        alpha = score
+      score *= score > 0 ? 1.0 - depthCoefficients[depth] : 1.0 + depthCoefficients[depth]
+      score *= score > 0 ? 1.0 - positionCoefficients[column] : 1.0 + positionCoefficients[column]
+      let plusSign = score < 0 ? "" : " "
+      print("d: \(depth), c: \(column), r: \(row), cells: \(cells[0][0])\(cells[1][0])\(cells[2][0]), score: \(plusSign)\(score)")
+      if depth == 1 {
+        print("")
+      }
+//      score *= positionCoefficients[column]
+      cancelFakeMove(column, row)
+      if score > newAlpha {
+        newAlpha = score
         if depth == 1 {
           bestColumn = column
         }
       }
-      guard alpha <= beta else {
+      guard newAlpha <= beta else {
         break
       }
     }
-    return -alpha
+    return -newAlpha
   }
   
+  func makeFakeMove(player: Int, _ column: Int, _ row: Int) {
+    cells[column][row] = player
+    cells[column][row + 1] = 2
+    madeMoves[column] += 1
+  }
+  
+  func cancelFakeMove(_ column: Int, _ row: Int) {
+    cells[column][row] = 2
+    cells[column][row + 1] = 3
+    madeMoves[column] -= 1
+  }
+
   func positionScore(for player: Player, column: Int, row: Int) -> Float {
-    if (cells[0][0] == player.rawValue &&
-        cells[0][1] == player.rawValue &&
-        cells[0][2] == player.rawValue) ||
-      (cells[1][0] == player.rawValue &&
-       cells[1][1] == player.rawValue &&
-       cells[1][2] == player.rawValue) ||
-      (cells[2][0] == player.rawValue &&
-       cells[2][1] == player.rawValue &&
-       cells[2][2] == player.rawValue) ||
-      (cells[0][0] == player.rawValue &&
-       cells[1][0] == player.rawValue &&
-       cells[2][0] == player.rawValue) ||
-      (cells[0][1] == player.rawValue &&
-       cells[1][1] == player.rawValue &&
-       cells[2][1] == player.rawValue) ||
-      (cells[0][2] == player.rawValue &&
-       cells[1][2] == player.rawValue &&
-        cells[2][2] == player.rawValue) ||
-      (cells[0][0] == player.rawValue &&
-       cells[1][1] == player.rawValue &&
-       cells[2][2] == player.rawValue) ||
-      (cells[0][2] == player.rawValue &&
-       cells[1][1] == player.rawValue &&
-        cells[2][0] == player.rawValue) {
+    if
+      cells[0][0] == player.rawValue &&
+      cells[0][1] == player.rawValue
+        &&
+      cells[0][2] == player.rawValue
+        ||
+      cells[1][0] == player.rawValue &&
+      cells[1][1] == player.rawValue
+        &&
+      cells[1][2] == player.rawValue ||
+      cells[2][0] == player.rawValue &&
+      cells[2][1] == player.rawValue &&
+      cells[2][2] == player.rawValue ||
+      cells[0][0] == player.rawValue &&
+      cells[1][0] == player.rawValue &&
+      cells[2][0] == player.rawValue ||
+      cells[0][1] == player.rawValue &&
+      cells[1][1] == player.rawValue &&
+      cells[2][1] == player.rawValue ||
+      cells[0][2] == player.rawValue &&
+      cells[1][2] == player.rawValue &&
+      cells[2][2] == player.rawValue ||
+      cells[0][0] == player.rawValue &&
+      cells[1][1] == player.rawValue &&
+      cells[2][2] == player.rawValue ||
+      cells[0][2] == player.rawValue &&
+      cells[1][1] == player.rawValue &&
+      cells[2][0] == player.rawValue
+    {
       return winScore
     }
     return winScore - 1.0
 //    // @TODO: Check real score
-//    let score = winScore - 1.0
 //    // @TODO: Use coefficients dependent on player or not?
-////    score *= 1.0 - (player == .phone ? 1.0 : -1.0) * positionCoefficients[column]
-////    score *= 1.0 - (player == .phone ? 1.0 : -1.0) * depthCoefficients[depth]
-//    return score
   }
   
   func cellType(column: Int, row: Int) -> Int {

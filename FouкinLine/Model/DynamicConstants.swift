@@ -27,7 +27,7 @@ enum DynamicConstants {
   
   // MARK: - Game AI constants.
   enum GameAI {
-    static let maxDepth = DynamicBinder<Int>(2)
+    static let maxDepth = DynamicBinder<Int>(10)
     static let winScore = DynamicBinder<Float>(10.0)
   }
 }
