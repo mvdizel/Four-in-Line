@@ -49,6 +49,7 @@ final class GameAI {
   }
 }
 
+
 // MARK: Public Instance Methods
 extension GameAI {
   
@@ -63,8 +64,6 @@ extension GameAI {
         completion(nil)
         return
       }
-      //    let testPosition = firstAvailableMove(on: gameBoard)
-      //    completion(testPosition)
       strongSelf.cells = []
       gameBoard.cells.forEach { rows in
         var column: [Int] = []
@@ -170,11 +169,11 @@ private extension GameAI {
       // MARK: Additional quality coefficients.
       score *= score > 0 ? 1.0 - depthCoefficients[depth] : 1.0 + depthCoefficients[depth]
       score *= score > 0 ? 1.0 - positionCoefficients[column] : 1.0 + positionCoefficients[column]
-      let plusSign = score < 0 ? "" : " "
-      print("d: \(depth), c: \(column), r: \(row), cells: \(cells[0][0])\(cells[1][0])\(cells[2][0]), score: \(plusSign)\(score)")
-      if depth == 1 {
-        print("")
-      }
+//      let plusSign = score < 0 ? "" : " "
+//      print("d: \(depth), c: \(column), r: \(row), cells: \(cells[0][0])\(cells[1][0])\(cells[2][0]), score: \(plusSign)\(score)")
+//      if depth == 1 {
+//        print("")
+//      }
       cancelFakeMove(column, row)
       // MARK: Best move score updates.
       if score > newAlpha {
@@ -203,8 +202,8 @@ private extension GameAI {
   }
 
   func positionScore(for player: Player, column: Int, row: Int) -> Float {
-    // @TODO: Check for forks.
-    var score: Float = winScore * 0.1
+    var isFork = false
+    var isPreFork = false
     for i in 0..<4 {
       guard let condition = WinConditions(rawValue: i) else {
         continue
@@ -212,6 +211,8 @@ private extension GameAI {
       var chipsInALine = 1
       var x = column
       var y = row
+      var closed = 0
+      var opened = 0
       switch condition {
       case .horizontal:
         x += 1
@@ -219,11 +220,15 @@ private extension GameAI {
           chipsInALine += 1
           x += 1
         }
+        closed += cellType(column: x, row: y) == 2 ? 1 : 0
+        closed += closed > 0 && cellType(column: x + 1, row: y) == 2 ? 1 : 0
         x = column - 1
         while cellType(column: x, row: y) == player.rawValue {
           chipsInALine += 1
           x -= 1
         }
+        opened += cellType(column: x, row: y) == 2 ? 1 : 0
+        opened += opened > 0 && cellType(column: x - 1, row: y) == 2 ? 1 : 0
       case .vertical:
         y -= 1
         while cellType(column: x, row: y) == player.rawValue {
@@ -238,6 +243,8 @@ private extension GameAI {
           x += 1
           y -= 1
         }
+        closed += cellType(column: x, row: y) == 2 ? 1 : 0
+        closed += closed > 0 && cellType(column: x + 1, row: y - 1) == 2 ? 1 : 0
         x = column - 1
         y = row + 1
         while cellType(column: x, row: y) == player.rawValue {
@@ -245,6 +252,8 @@ private extension GameAI {
           x -= 1
           y += 1
         }
+        opened += cellType(column: x, row: y) == 2 ? 1 : 0
+        opened += opened > 0 && cellType(column: x - 1, row: y + 1) == 2 ? 1 : 0
       case .bottomDiagonal:
         x += 1
         y += 1
@@ -253,6 +262,8 @@ private extension GameAI {
           x += 1
           y += 1
         }
+        closed += cellType(column: x, row: y) == 2 ? 1 : 0
+        closed += closed > 0 && cellType(column: x + 1, row: y + 1) == 2 ? 1 : 0
         x = column - 1
         y = row - 1
         while cellType(column: x, row: y) == player.rawValue {
@@ -260,13 +271,25 @@ private extension GameAI {
           x -= 1
           y -= 1
         }
+        opened += cellType(column: x, row: y) == 2 ? 1 : 0
+        opened += opened > 0 && cellType(column: x - 1, row: y - 1) == 2 ? 1 : 0
       }
       guard chipsInALine < 4 else {
-        score = winScore
-        break
+        return winScore
+      }
+      if chipsInALine == 3, opened + closed > 0 {
+        isFork = true
+      } else if chipsInALine == 2, opened + closed > 2 {
+        isPreFork = true
       }
     }
-    return score
+    if isFork {
+      return winScore * 0.9
+    } else if isPreFork {
+      return winScore * 0.8
+    } else {
+      return winScore * 0.1
+    }
   }
   
   func cellType(column: Int, row: Int) -> Int {
