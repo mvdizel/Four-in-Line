@@ -8,6 +8,13 @@
 
 import Foundation
 
+private enum WinConditions: Int {
+  case horizontal = 0
+  case vertical
+  case upperDiagonal
+  case bottomDiagonal
+}
+
 /// A singleton, defining Artificial Intelligence of game.
 final class GameAI {
   
@@ -51,47 +58,52 @@ extension GameAI {
   ///   - gameBoard: A `GameBoard` with current game state.
   ///   - completion: A handler, which fires, when AI found the best move.
   func bestMove(on gameBoard: GameBoard, completion: @escaping (ChipPosition?) -> Void) {
-//    let testPosition = firstAvailableMove(on: gameBoard)
-//    completion(testPosition)
-//    return
-    cells = []
-    gameBoard.cells.forEach { rows in
-      var column: [Int] = []
-      rows.forEach({ player in
-        if let cellType = player?.rawValue {
+    DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+      guard let strongSelf = self else {
+        completion(nil)
+        return
+      }
+      //    let testPosition = firstAvailableMove(on: gameBoard)
+      //    completion(testPosition)
+      strongSelf.cells = []
+      gameBoard.cells.forEach { rows in
+        var column: [Int] = []
+        rows.forEach({ player in
+          if let cellType = player?.rawValue {
+            column.append(cellType)
+            return
+          }
+          let cellType = (column.last ?? 0) < 2 ? 2 : 3
           column.append(cellType)
-          return
-        }
-        let cellType = (column.last ?? 0) < 2 ? 2 : 3
-        column.append(cellType)
-      })
-      column.append(3)
-      cells.append(column)
+        })
+        column.append(3)
+        strongSelf.cells.append(column)
+      }
+      strongSelf.madeMoves = strongSelf.cells.map { column in
+        return column.filter({ $0 < 2 }).count
+      }
+      let alpha = -Float.infinity
+      let beta = Float.infinity
+      var iteration = 0
+      var depth = 0
+      strongSelf.bestColumn = nil
+      _ = strongSelf.minimax(
+        for: .phone,
+        alpha: alpha,
+        beta: beta,
+        iteration: &iteration,
+        depth: &depth
+      )
+      guard let bestColumn = strongSelf.bestColumn else {
+        completion(nil)
+        return
+      }
+      let position = ChipPosition(
+        column: bestColumn,
+        row: strongSelf.madeMoves[bestColumn]
+      )
+      completion(position)
     }
-    madeMoves = cells.map { column in
-      return column.filter({ $0 < 2 }).count
-    }
-    let alpha = -Float.infinity
-    let beta = Float.infinity
-    var iteration = 0
-    var depth = 0
-    bestColumn = nil
-    _ = minimax(
-      for: .phone,
-      alpha: alpha,
-      beta: beta,
-      iteration: &iteration,
-      depth: &depth
-    )
-    guard let bestColumn = bestColumn else {
-      completion(nil)
-      return
-    }
-    let position = ChipPosition(
-      column: bestColumn,
-      row: madeMoves[bestColumn]
-    )
-    completion(position)
   }
 }
 
@@ -134,16 +146,15 @@ private extension GameAI {
       depth -= 1
     }
     // @TODO: Check if winner found on current move.
-    // @TODO: Update score with current depth.
-    // @TODO: Check for forks.
     for column in 0..<DynamicConstants.GameBoard.numberOfColumns.value {
       let row = madeMoves[column]
       guard row < DynamicConstants.GameBoard.numberOfRows.value else {
         continue
       }
+      // MARK: Calculating current position score.
       makeFakeMove(player: player.rawValue, column, row)
       var score = positionScore(for: player, column: column, row: row)
-//      score *= depthCoefficients[depth]
+      // MARK: Calculating future position score when it make sense
       if score <= winScore - 1.0, depth < maxDepth {
         let futureScore = minimax(
           for: player.next(),
@@ -156,6 +167,7 @@ private extension GameAI {
           score = futureScore
         }
       }
+      // MARK: Additional quality coefficients.
       score *= score > 0 ? 1.0 - depthCoefficients[depth] : 1.0 + depthCoefficients[depth]
       score *= score > 0 ? 1.0 - positionCoefficients[column] : 1.0 + positionCoefficients[column]
       let plusSign = score < 0 ? "" : " "
@@ -163,8 +175,8 @@ private extension GameAI {
       if depth == 1 {
         print("")
       }
-//      score *= positionCoefficients[column]
       cancelFakeMove(column, row)
+      // MARK: Best move score updates.
       if score > newAlpha {
         newAlpha = score
         if depth == 1 {
@@ -191,44 +203,75 @@ private extension GameAI {
   }
 
   func positionScore(for player: Player, column: Int, row: Int) -> Float {
-    if
-      cells[0][0] == player.rawValue &&
-      cells[0][1] == player.rawValue
-        &&
-      cells[0][2] == player.rawValue
-        ||
-      cells[1][0] == player.rawValue &&
-      cells[1][1] == player.rawValue
-        &&
-      cells[1][2] == player.rawValue ||
-      cells[2][0] == player.rawValue &&
-      cells[2][1] == player.rawValue &&
-      cells[2][2] == player.rawValue ||
-      cells[0][0] == player.rawValue &&
-      cells[1][0] == player.rawValue &&
-      cells[2][0] == player.rawValue ||
-      cells[0][1] == player.rawValue &&
-      cells[1][1] == player.rawValue &&
-      cells[2][1] == player.rawValue ||
-      cells[0][2] == player.rawValue &&
-      cells[1][2] == player.rawValue &&
-      cells[2][2] == player.rawValue ||
-      cells[0][0] == player.rawValue &&
-      cells[1][1] == player.rawValue &&
-      cells[2][2] == player.rawValue ||
-      cells[0][2] == player.rawValue &&
-      cells[1][1] == player.rawValue &&
-      cells[2][0] == player.rawValue
-    {
-      return winScore
+    // @TODO: Check for forks.
+    var score: Float = winScore * 0.1
+    for i in 0..<4 {
+      guard let condition = WinConditions(rawValue: i) else {
+        continue
+      }
+      var chipsInALine = 1
+      var x = column
+      var y = row
+      switch condition {
+      case .horizontal:
+        x += 1
+        while cellType(column: x, row: y) == player.rawValue {
+          chipsInALine += 1
+          x += 1
+        }
+        x = column - 1
+        while cellType(column: x, row: y) == player.rawValue {
+          chipsInALine += 1
+          x -= 1
+        }
+      case .vertical:
+        y -= 1
+        while cellType(column: x, row: y) == player.rawValue {
+          chipsInALine += 1
+          y -= 1
+        }
+      case .upperDiagonal:
+        x += 1
+        y -= 1
+        while cellType(column: x, row: y) == player.rawValue {
+          chipsInALine += 1
+          x += 1
+          y -= 1
+        }
+        x = column - 1
+        y = row + 1
+        while cellType(column: x, row: y) == player.rawValue {
+          chipsInALine += 1
+          x -= 1
+          y += 1
+        }
+      case .bottomDiagonal:
+        x += 1
+        y += 1
+        while cellType(column: x, row: y) == player.rawValue {
+          chipsInALine += 1
+          x += 1
+          y += 1
+        }
+        x = column - 1
+        y = row - 1
+        while cellType(column: x, row: y) == player.rawValue {
+          chipsInALine += 1
+          x -= 1
+          y -= 1
+        }
+      }
+      guard chipsInALine < 4 else {
+        score = winScore
+        break
+      }
     }
-    return winScore - 1.0
-//    // @TODO: Check real score
-//    // @TODO: Use coefficients dependent on player or not?
+    return score
   }
   
   func cellType(column: Int, row: Int) -> Int {
-    guard cells.count > column, cells[column].count > row else {
+    guard cells.count > column, column >= 0,
+          cells[column].count > row, row >= 0 else {
       return 3
     }
     return cells[column][row]
