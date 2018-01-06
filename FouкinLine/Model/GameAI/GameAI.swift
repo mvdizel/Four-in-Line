@@ -28,12 +28,10 @@ final class GameAI {
   private var bestColumn: Int?
   private var positionCoefficients: [Float] = []
   private var depthCoefficients: [Float] = []
-  private var winScore: Float {
-    return DynamicConstants.GameAI.winScore.value
-  }
-  private var maxDepth: Int {
-    return DynamicConstants.GameAI.maxDepth.value
-  }
+  private var numberOfColumns: Int = 0
+  private var numberOfRows: Int = 0
+  private var winScore: Float = 0.0
+  private var maxDepth: Int = 0
 
   
   // MARK: - Initializers
@@ -110,12 +108,21 @@ extension GameAI {
 // MARK: Private Instance Methods
 private extension GameAI {
   
+  /// Setups initial parameters.
   func setup() {
-    DynamicConstants.GameBoard.numberOfColumns.bindAndFire(with: self) { [weak self] _ in
+    DynamicConstants.GameBoard.numberOfColumns.bindAndFire(with: self) { [weak self] numberOfColumns in
+      self?.numberOfColumns = numberOfColumns
       self?.calculateCoefficients()
     }
-    DynamicConstants.GameAI.maxDepth.bind(with: self) { [weak self] _ in
+    DynamicConstants.GameBoard.numberOfRows.bindAndFire(with: self) { [weak self] numberOfRows in
+      self?.numberOfRows = numberOfRows
+    }
+    DynamicConstants.GameAI.maxDepth.bindAndFire(with: self) { [weak self] maxDepth in
+      self?.maxDepth = maxDepth
       self?.calculateCoefficients()
+    }
+    DynamicConstants.GameAI.winScore.bindAndFire(with: self) { [weak self] winScore in
+      self?.winScore = winScore
     }
   }
   
@@ -145,9 +152,9 @@ private extension GameAI {
       depth -= 1
     }
     // @TODO: Check if winner found on current move.
-    for column in 0..<DynamicConstants.GameBoard.numberOfColumns.value {
+    for column in 0..<numberOfColumns {
       let row = madeMoves[column]
-      guard row < DynamicConstants.GameBoard.numberOfRows.value else {
+      guard row < numberOfRows else {
         continue
       }
       // MARK: Calculating current position score.
@@ -169,11 +176,10 @@ private extension GameAI {
       // MARK: Additional quality coefficients.
       score *= score > 0 ? 1.0 - depthCoefficients[depth] : 1.0 + depthCoefficients[depth]
       score *= score > 0 ? 1.0 - positionCoefficients[column] : 1.0 + positionCoefficients[column]
-//      let plusSign = score < 0 ? "" : " "
-//      print("d: \(depth), c: \(column), r: \(row), cells: \(cells[0][0])\(cells[1][0])\(cells[2][0]), score: \(plusSign)\(score)")
-//      if depth == 1 {
-//        print("")
-//      }
+      if depth == 1 {
+        let plusSign = score < 0 ? "" : " "
+        print("d: \(depth), c: \(column), r: \(row), score: \(plusSign)\(score)")
+      }
       cancelFakeMove(column, row)
       // MARK: Best move score updates.
       if score > newAlpha {
